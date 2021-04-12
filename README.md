@@ -4,5 +4,5 @@ Portierung des Projektes MBMan in Python.
 
 ## Installation
 ```
-git clone git@github.com:ingank/MBMan.git
+git clone git@github.com:ingank/MBManPy.git
 ```
