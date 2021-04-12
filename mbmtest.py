@@ -7,28 +7,29 @@
 #
 
 import mbman
-import sys
-import getopt
+import argparse
 
-arg_list = sys.argv[1:]  # erstes Argument der Kommndozeile und darauf folgende
-short_opts = "?hmo:"
-long_opts = ["Help", "My_file", "Output ="]
+parser = argparse.ArgumentParser(
+    description='Ein Programm zur Anwendung des Moduls mbman.py'
+)
 
-try:
+parser.add_argument("-v", "--verbose", action="store_true")
+parser.add_argument("-x", "--expunge", action="store_true")
+parser.add_argument("-s", "--server")
+parser.add_argument("-u", "--username")
+parser.add_argument("-p", "--passphrase")
+parser.add_argument("-m", "--mailbox")
+parser.add_argument("-l", "--limit")
+parser.add_argument("--uid")
+parser.add_argument("--connect", action="store_true")
+parser.add_argument("--login", action="store_true")
+parser.add_argument("--get-mb-list", action="store_true")
+parser.add_argument("--get-quota", action="store_true")
+parser.add_argument("--get-info", action="store_true")
+parser.add_argument("--get-message", action="store_true")
+parser.add_argument("--autolimit", action="store_true")
+parser.add_argument("--check-validity", action="store_true")
 
-    arguments, values = getopt.getopt(arg_list, short_opts, long_opts)
-
-    for currentArgument, currentValue in arguments:
-
-        if currentArgument in ("-?", "-h", "--Help"):
-            print("Diplaying Help")
-
-        elif currentArgument in ("-m", "--My_file"):
-            print("Displaying file_name:", sys.argv[0])
-
-        elif currentArgument in ("-o", "--Output"):
-            print(("Enabling special output mode (% s)") % (currentValue))
-
-except getopt.error as err:
-    # output error, and return with an error code
-    print(str(err))
+parser.print_help()
+args = parser.parse_args()
+print(args)
