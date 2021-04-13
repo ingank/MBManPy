@@ -35,11 +35,15 @@ parser.add_argument("-M", "--get-message", action="store_true", help="get a mess
 parser.add_argument("-A", "--autolimit", action="store_true", help="automatic limit an backup the mailbox")
 
 args = parser.parse_args()
-#print(args)
-
 mbman = mbman.MBMan(debug=args.debug)
+
+if (args.print_args):
+    print(args)
 
 if (args.connect):
     mbman.connect(server=args.server)
+
+if (args.login):
+    mbman.login(user=args.user, phrase=args.phrase)
 
 mbman.disconnect()
