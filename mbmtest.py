@@ -14,11 +14,12 @@ parser = argparse.ArgumentParser(description='A Python program using modul mbman
 # Optionen
 parser.add_argument("-x", "--expunge", action="store_true", help="delete messages on server")
 parser.add_argument("-c", "--check-validity", action="store_true", help="check backup-files against server-data")
+parser.add_argument("-a", "--print-args", action="store_true", help="print parsed command line arguments")
 
 # Parameter
 parser.add_argument("-s", "--server", metavar="foo", help="given server name is foo")
 parser.add_argument("-u", "--user", metavar="foo", help="given username is foo")
-parser.add_argument("-p", "--pass", metavar="foo", help="given passphrase is foo")
+parser.add_argument("-p", "--phrase", metavar="foo", help="given passphrase is foo")
 parser.add_argument("-m", "--mbox", metavar="foo", help="select mailbox foo")
 parser.add_argument("-l", "--limit", metavar="int", type=int, help="set limit to int percent")
 parser.add_argument("-i", "--uid", metavar="int", type=int, help="select message with uid int")
