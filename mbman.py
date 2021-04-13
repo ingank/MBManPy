@@ -22,8 +22,18 @@ class MBMan:
         if (self.opened):
             return
         self.server = server
-        self.imap4 = imaplib.IMAP4_SSL(self.server)
+        self.imap4 = imaplib.IMAP4_SSL(server)
         self.connected = True
+
+    def login(self, user, phrase):
+        if (not self.connected):
+            return
+        if (self.opened):
+            return
+        self.user = user
+        self.phrase = phrase
+        self.imap4.login(user, phrase)
+        self.opened = True
 
     def disconnect(self):
         if (self.opened):
