@@ -12,7 +12,6 @@ import argparse
 parser = argparse.ArgumentParser(description='A Python program using modul mbman.py')
 
 # Optionen
-parser.add_argument("-v", "--verbose", action="store_true", help="increase verbosity")
 parser.add_argument("-x", "--expunge", action="store_true", help="delete messages on server")
 parser.add_argument("-c", "--check-validity", action="store_true", help="check backup-files against server-data")
 
@@ -23,6 +22,7 @@ parser.add_argument("-p", "--pass", metavar="foo", help="given passphrase is foo
 parser.add_argument("-m", "--mbox", metavar="foo", help="select mailbox foo")
 parser.add_argument("-l", "--limit", metavar="int", help="set limit to int percent")
 parser.add_argument("-i", "--uid", metavar="int", help="select message with uid int")
+parser.add_argument("-d", "--debug", metavar="int", help="set debug level to int", default=0)
 
 # Befehle
 parser.add_argument("-C", "--connect", action="store_true", help="connect to imap server")
