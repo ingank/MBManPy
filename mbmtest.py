@@ -21,8 +21,8 @@ parser.add_argument("-s", "--server", metavar="foo", help="given server name is 
 parser.add_argument("-u", "--user", metavar="foo", help="given username is foo")
 parser.add_argument("-p", "--pass", metavar="foo", help="given passphrase is foo")
 parser.add_argument("-m", "--mbox", metavar="foo", help="select mailbox foo")
-parser.add_argument("-l", "--limit", metavar="foo", help="set limit to foo percent")
-parser.add_argument("-i", "--uid", metavar="foo", help="select message with uid foo")
+parser.add_argument("-l", "--limit", metavar="int", help="set limit to int percent")
+parser.add_argument("-i", "--uid", metavar="int", help="select message with uid int")
 
 # Befehle
 parser.add_argument("-C", "--connect", action="store_true", help="connect to imap server")
