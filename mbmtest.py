@@ -9,7 +9,7 @@
 import mbman
 import argparse
 
-parser = argparse.ArgumentParser(description='Ein Programm zur Anwendung des Moduls mbman.py')
+parser = argparse.ArgumentParser(description='A Python program using modul mbman.py')
 
 # Optionen
 parser.add_argument("-v", "--verbose", action="store_true", help="increase verbosity")
