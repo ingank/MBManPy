@@ -33,6 +33,5 @@ parser.add_argument("-I", "--get-info", action="store_true", help="print some in
 parser.add_argument("-M", "--get-message", action="store_true", help="get a message from server")
 parser.add_argument("-A", "--autolimit", action="store_true", help="automatic limit an backup the mailbox")
 
-parser.print_help()
 args = parser.parse_args()
 print(args)
