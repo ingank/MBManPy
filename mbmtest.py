@@ -18,6 +18,9 @@ def main():
             mb.connect(server=args.server)
         if (args.login):
             mb.login(user=args.user, phrase=args.phrase)
+        if (args.get_quota):
+            usage, quota = mb.quota()
+            print(usage, quota, " = ", usage/quota*100, "%")
     except:
         mb.disconnect()
         raise
