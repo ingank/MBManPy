@@ -34,6 +34,7 @@ class MBMan:
         self.user = user
         self.phrase = phrase
         self.imap4.login(user, phrase)
+        self.authenticated = True
 
     def disconnect(self):
         if (self.selected):
