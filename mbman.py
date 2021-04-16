@@ -46,3 +46,19 @@ class MBMan:
             self.authenticated = False
             self.connected = False
             self.logout = False
+
+    def quota(self):
+        if (not self.connected):
+            return
+        if (not self.authenticated):
+            return
+        quota_root = ('user/' + self.user)
+        quota = self.imap4.getquota(quota_root)
+        quota, quota = quota
+        quota = quota[0].decode("ascii")
+        usage, quota = re.findall(r"STORAGE (\d+) (\d+)", quota)[0]
+        usage = int(usage)
+        quota = int(quota)
+        self.usage_val = usage
+        self.quota_val = quota
+        return usage, quota
