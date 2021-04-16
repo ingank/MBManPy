@@ -7,6 +7,7 @@
 #
 
 import imaplib
+import re
 
 
 class MBMan:
