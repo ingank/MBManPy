@@ -80,3 +80,40 @@ class MBMan:
         self.usage_val = usage
         self.quota_val = quota
         return usage, quota
+
+    #
+    # TESTING AREA!!!
+    #
+
+    # idle, idle_done:
+    # Copyright (c) 2012 Mathieu Lecarme
+    # This code is licensed under the MIT license
+
+    def idle(self):
+        connection = self.imap4
+        tag = connection._new_tag()
+        name = bytes('IDLE', 'ASCII')
+        data = tag + b' ' + name
+        connection.send(data + imaplib.CRLF)
+        response = connection.readline()
+        if response != b'+ idling\r\n':
+            raise Exception("IDLE not handled? : %s" % response)
+        self.loop = True
+        while self.loop:
+            try:
+                resp = connection._get_response()
+            except connection.abort:
+                connection.done()
+            else:
+                uid, message = resp.split(maxsplit=2)[1:]
+                if uid.isdigit():
+                    yield uid, message
+                elif uid != b'OK':
+                    raise Exception('IDLE command error: %s %s' % (uid.decode(), message))
+                # we have * OK still here
+
+    def idle_done(self):
+        connection = self.imap4
+        connection.send(b'DONE\r\n')
+        connection.readline()
+        self.loop = False
