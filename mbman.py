@@ -17,6 +17,8 @@ class MBMan:
         self.authenticated = False
         self.selected = False
         self.logout = False
+        self.readonly = True
+        self.loop = False
         imaplib.Debug = debug
 
     def connect(self, server):
