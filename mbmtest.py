@@ -48,6 +48,9 @@ def parseArgs():
     parser.add_argument("-B", "--get-boxes", action="store_true", help="print a list of available mailboxes")
     parser.add_argument("-I", "--get-info", action="store_true", help="print some infos about the mbman object")
     parser.add_argument("-M", "--get-message", action="store_true", help="get a message from server")
+    parser.add_argument("-W", "--watch", action="store_true", help="idle connection and wait for server message")
+    parser.add_argument("-S", "--select", action="store_true", help="select a specific mailbox")
+    parser.add_argument("-E", "--examine", action="store_true", help="select a specific mailbox readonly")
     parser.add_argument("-A", "--autolimit", action="store_true", help="automatic limit an backup the mailbox")
     #-#
     args = parser.parse_args()
