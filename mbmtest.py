@@ -21,6 +21,14 @@ def main():
         if (args.get_quota):
             usage, quota = mb.quota()
             print(usage, quota, " = ", usage/quota*100, "%")
+        if (args.select):
+            if (args.mbox):
+                mb.select(args.mbox)
+        if (args.examine):
+            if (args.mbox):
+                mb.examine(args.mbox)
+        if (args.watchdog):
+            mb.idle()
     except:
         mb.disconnect()
         raise
