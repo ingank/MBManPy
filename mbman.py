@@ -36,6 +36,24 @@ class MBMan:
         self.imap4.login(user, phrase)
         self.authenticated = True
 
+    def select(self, mailbox):
+        if (not self.connected):
+            return
+        if (not self.authenticated):
+            return
+        self.imap4.select(mailbox, readonly=False)
+        self.selected = True
+        self.readonly = False
+
+    def examine(self, mailbox):
+        if (not self.connected):
+            return
+        if (not self.authenticated):
+            return
+        self.imap4.select(mailbox, readonly=True)
+        self.selected = True
+        self.readonly = True
+
     def disconnect(self):
         if (self.selected):
             self.imap4.close()
