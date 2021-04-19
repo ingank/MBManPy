@@ -28,34 +28,62 @@ Es gibt vier Zustände einer IMAP4 Client-Server-Verbindung.
     * `AUTHENTICATE`
     * `LOGIN`
   * Mögliche IMAP-Befehle (Capabilities):
-    * Alle Befehle des _Not Authenticated State_
-    * SELECT
-    * EXAMINE
+    * APPEND
+    * CAPABILITY
     * CREATE
     * DELETE
+    * EXAMINE
+    * LIST
+    * LOGOUT
+    * LSUB
+    * NOOP
     * RENAME
+    * SELECT
+    * STATUS
     * SUBSCRIBE
     * UNSUBSCRIBE
-    * LIST
-    * LSUB
-    * STATUS
-    * APPEND
 * __Ausgewählter Zustand (Selected State)__
   * Ein bestimmtes Postfach wurde ausgewählt.
   * Der _Selected State_ kann herbeigeführt werden mit den Befehlen:
     * `SELECT`: Lese-/schreibzugriff auf die Mailbox.
     * `EXAMINE`: Lesezugriff auf die Mailbox.
   * Mögliche IMAP-Befehle (Capabilities):
-    * Alle Befehle des _Not Authenticated State_
-    * Alle Befehle des _Authenticated State_
+    * APPEND
+    * CAPABILITY
     * CHECK
     * CLOSE
-    * EXPUNGE
-    * SEARCH
-    * FETCH
-    * STORE
     * COPY
+    * CREATE
+    * DELETE
+    * DELETEACL
+    * EXAMINE
+    * EXPUNGE
+    * FETCH
+    * GETACL
+    * GETANNOTATION
+    * GETQUOTA
+    * GETQUOTAROOT
+    * MYRIGHTS
+    * LIST
+    * LOGOUT
+    * LSUB
+    * MOVE
+    * NAMESPACE
+    * NOOP
+    * PARTIAL
+    * RENAME
+    * SEARCH
+    * SELECT
+    * SETACL
+    * SETANNOTATION
+    * SETQUOTA
+    * SORT
+    * STATUS
+    * STORE
+    * SUBSCRIBE
+    * THREAD
     * UID
+    * UNSUBSCRIBE
 * __Abmeldezustand (Logout State)__
   * konkretisiert den Zustand zwischen dem Senden des Befehls `LOGOUT` und der Serverantwort `BYE`
   * Mögliche IMAP-Befehle (Capabilities):
@@ -64,7 +92,6 @@ Es gibt vier Zustände einer IMAP4 Client-Server-Verbindung.
     * NOOP
 
 ### Zusammenfassung
-
 |COMMAND|NONAUTH|AUTH|SELECTED|LOGOUT|OBSOLET|
 |:-|:-:|:-:|:-:|:-:|:-:|
 |APPEND| |X|X| | |
