@@ -66,7 +66,7 @@ Es gibt vier Zustände einer IMAP4 Client-Server-Verbindung.
 ### Zusammenfassung
 
 |COMMAND|NONAUTH|AUTH|SELECTED|LOGOUT|OBSOLET|
-|-|:-:|:-:|:-:|:-:|:-:|
+|:-|:-:|:-:|:-:|:-:|:-:|
 |APPEND| |X|X| | |
 |AUTHENTICATE|X| | | | |
 |CAPABILITY|X|X|X|X| |
