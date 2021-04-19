@@ -27,7 +27,7 @@ def main():
         if (args.examine):
             if (args.mbox):
                 mb.examine(args.mbox)
-        if (args.watchdog):
+        if (args.watch):
             mb.idle()
     except:
         mb.disconnect()
