@@ -11,6 +11,22 @@ import re
 
 
 class MBMan:
+
+    special_use = (
+        # RFC 6154
+        # IETF Draft: IMAP LIST extension for special-use mailboxes
+        'All',
+        'Archive',
+        'Drafts',
+        'Flagged',
+        'Junk',
+        'Sent',
+        'Trash',
+        'AllMail',  # obsolete
+        'Spam',    # obsolete
+        'Starred'  # obsolete
+    )
+
     def __init__(self, debug):
         imaplib.Debug = debug
         self.state = 'LOGOUT'
