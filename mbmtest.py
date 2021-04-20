@@ -27,6 +27,8 @@ def main():
         if (args.examine):
             if (args.mbox):
                 mb.examine(args.mbox)
+        if (args.test):
+            print(mb.folder())
         if (args.watch):
             mb.idle()
     except:
@@ -60,6 +62,7 @@ def parseArgs():
     parser.add_argument("-S", "--select", action="store_true", help="select a specific mailbox")
     parser.add_argument("-E", "--examine", action="store_true", help="select a specific mailbox readonly")
     parser.add_argument("-A", "--autolimit", action="store_true", help="automatic limit an backup the mailbox")
+    parser.add_argument("-T", "--test", action="store_true", help="test a new object function")
     #-#
     args = parser.parse_args()
     if (args.print_args):
