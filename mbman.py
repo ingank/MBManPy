@@ -74,6 +74,27 @@ class MBMan:
         quota = int(quota)
         return usage, quota
 
+    def folder(self):
+        ok, response = self.imap4.list()
+        if (ok == 'OK'):
+            folders = []
+            for line in response:
+                line = line.decode("ascii")
+                line = re.split(' "." ', line)
+                line = (
+                    re.findall(r"^\((.*)\)$", line[0])[0],
+                    re.findall(r"^\"(.*)\"$", line[1])[0]
+                )
+                special = 'NoSpecial'
+                for su in self.special_use:
+                    if (line[0].find(su) != -1):
+                        special = su
+                        break
+                folders.append(special)
+                folders.append(line[1])
+            return folders
+        return
+
     #
     # TESTING AREA!!!
     #
