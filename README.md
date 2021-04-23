@@ -91,7 +91,6 @@ Es gibt vier Zustände einer IMAP4 Client-Server-Verbindung.
     * LOGOUT
     * NOOP
 
-### Zusammenfassung
 |COMMAND|NONAUTH|AUTH|SELECTED|LOGOUT|OBSOLET|
 |:-|:-:|:-:|:-:|:-:|:-:|
 |APPEND| |X|X| | |
@@ -135,3 +134,16 @@ Es gibt vier Zustände einer IMAP4 Client-Server-Verbindung.
 |THREAD| | |X| | |
 |UID| | |X| | |
 |UNSUBSCRIBE| |X|X| | |
+
+### RFC Liste
+
+* RFC 3501
+  * INTERNET MESSAGE ACCESS PROTOCOL - VERSION 4rev1 (2003)
+* RFC 2060
+  * INTERNET MESSAGE ACCESS PROTOCOL - VERSION 4rev1 (1996)
+* RFC 1730
+  * INTERNET MESSAGE ACCESS PROTOCOL - VERSION 4 (1994)
+* RFC 2177
+  * IMAP4 IDLE command
+* RFC 822
+  * STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES
