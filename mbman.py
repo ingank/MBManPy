@@ -31,6 +31,15 @@ class MBMan:
         imaplib.Debug = debug
         self.state = 'LOGOUT'
 
+    def state(self):
+        return self.imap4.state()
+
+    def state_is(self, value):
+        return (return self.imap4.state() == value)
+
+    def capability(self):
+        return self.imap4.capability()
+
     def connect(self, server):
         self.server = server
         self.imap4 = imaplib.IMAP4_SSL(server)
