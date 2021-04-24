@@ -64,10 +64,6 @@ class MBMan:
         else:
             self.imap4.logout()
 
-    def disconnect(self):
-        self.close()
-        self.logout()
-
     def quota(self):
         quota_root = ('user/' + self.user)
         quota = self.imap4.getquota(quota_root)
