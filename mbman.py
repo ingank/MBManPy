@@ -29,13 +29,12 @@ class MBMan:
 
     def __init__(self, debug):
         imaplib.Debug = debug
-        self.state = 'LOGOUT'
 
     def state(self):
         return self.imap4.state()
 
     def state_is(self, value):
-        return (return self.imap4.state() == value)
+        return (self.imap4.state() == value)
 
     def capability(self):
         return self.imap4.capability()
@@ -43,31 +42,27 @@ class MBMan:
     def connect(self, server):
         self.server = server
         self.imap4 = imaplib.IMAP4_SSL(server)
-        self.state = self.imap4.state
 
     def login(self, user, phrase):
         self.user = user
         self.phrase = phrase
         self.imap4.login(user, phrase)
-        self.state = self.imap4.state
 
     def select(self, mailbox):
         self.imap4.select(mailbox, readonly=False)
-        self.state = self.imap4.state
 
     def examine(self, mailbox):
         self.imap4.select(mailbox, readonly=True)
-        self.state = self.imap4.state
 
     def close(self):
-        if (self.state == 'SELECTED'):
+        if self.state_is('SELECTED'):
             self.imap4.close()
-            self.state = self.imap4.state
 
     def logout(self):
-        if (self.state != 'LOGOUT'):
+        if self.state_is('SELECTED'):
+            self.imap4.close()
+        else:
             self.imap4.logout()
-            self.state = self.imap4.state
 
     def disconnect(self):
         self.close()
