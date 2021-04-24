@@ -28,7 +28,7 @@ def main():
             if (args.mbox):
                 mb.examine(args.mbox)
         if (args.test):
-            print(mb.folder())
+            print(mb.capability())
         if (args.watch):
             mb.idle()
     except:
