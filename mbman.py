@@ -94,7 +94,7 @@ class MBMan:
                     if (line[0].find(su) != -1):
                         special = su
                         break
-                folders.append([special,line[1]])
+                folders.append([special, line[1]])
             return folders
         return
 
