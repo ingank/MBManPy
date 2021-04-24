@@ -59,10 +59,8 @@ class MBMan:
             self.imap4.close()
 
     def logout(self):
-        if self.state_is('SELECTED'):
-            self.imap4.close()
-        else:
-            self.imap4.logout()
+        self.imap4.close()
+        self.imap4.logout()
 
     def quota(self):
         quota_root = ('user/' + self.user)
