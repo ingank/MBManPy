@@ -92,6 +92,15 @@ class MBMan:
             return folders
         return
 
+    def ls(self):
+        return self.imap4.uid('fetch', '0:*', "RFC822.SIZE")
+
+    def ls_al(self):
+        return self.imap4.uid('fetch', '0:*', "ALL")
+
+    def limit(self, lim):
+        pass
+
     #
     # TESTING AREA!!!
     #
