@@ -32,9 +32,9 @@ def main():
         if (args.watch):
             mb.idle()
     except:
-        mb.disconnect()
+        mb.logout()
         raise
-    mb.disconnect()
+    mb.logout()
 
 
 def parseArgs():
