@@ -28,7 +28,7 @@ def main():
                 print(mb.select(args.mbox))
         if (args.examine):
             if (args.mbox):
-                print(mb.examine(args.mbox))
+                print(mb.select(args.mbox, True))
         if (args.test):
             print(mb.db_path())
         if (args.watch):
