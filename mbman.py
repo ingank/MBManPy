@@ -147,30 +147,21 @@ class MBMan:
                 break
         return uid_list
 
-    def message_fetch(self, uid, mailbox='INBOX'):
+    def message_fetch(self, uid, mailbox='INBOX', delete=False):
         #
-        # Gibt die Nachricht als Text zurück,
+        # Gibt die Nachricht zurück,
         # die mit Hilfe von `uid` und `mailbox` adressiert wird.
-        # Die Nachricht verbleibt auf dem Server.
+        # Die Nachricht wird auf dem Server zum Löschen vorgemerkt,
+        # wenn der Schalter `delete=True` gesetzt wird.
         #
-        ok, response = self.examine(mailbox)
+        ok, response = self.slelect(mailbox, delete)
         ok, response = self.imap4.uid('fetch', uid, "RFC822")
-        response = response[0][1].decode("ascii")
-        return response
-
-    def message_cut(self, uid, mailbox='INBOX'):
-        #
-        # Gibt die Nachricht als Text zurück,
-        # die mit Hilfe von `uid` und `mailbox` adressiert wird.
-        # Die Nachricht wird auf dem Server zum Löschen vorgemerkt.
-        #
-        ok, response = self.select(mailbox)
-        ok, response = self.imap4.uid('fetch', uid, "RFC822")
-        message = response[0][1].decode("ascii")
-        # Nachricht wird vorerst NICHT als `\Deleted` markiert
-        # ok, response = self.imap4.uid('store', uid, '+FLAGS', '\\Deleted')
-        ok, response = self.imap4.uid('store', uid, '-FLAGS', '\\Deleted')
-        return message
+        message = response[0][1]
+        if delete:
+            # Nachricht wird vorerst NICHT als `\Deleted` markiert
+            # self.imap4.uid('store', uid, '+FLAGS', '\\Deleted')
+            self.imap4.uid('store', uid, '-FLAGS', '\\Deleted')
+        return ok, message
 
     def db_path(self):
         #
