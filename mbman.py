@@ -127,6 +127,31 @@ class MBMan:
                 break
         return uid_list
 
+    def message_fetch(self, uid, mailbox='INBOX'):
+        #
+        # Gibt die Nachricht als Text zurück,
+        # die mit Hilfe von `uid` und `mailbox` adressiert wird.
+        # Die Nachricht verbleibt auf dem Server.
+        #
+        ok, response = self.examine(mailbox)
+        ok, response = self.imap4.uid('fetch', uid, "RFC822")
+        response = response[0][1].decode("ascii")
+        return response
+
+    def message_cut(self, uid, mailbox='INBOX'):
+        #
+        # Gibt die Nachricht als Text zurück,
+        # die mit Hilfe von `uid` und `mailbox` adressiert wird.
+        # Die Nachricht wird zum Löschen vorgemerkt.
+        #
+        ok, response = self.select(mailbox)
+        ok, response = self.imap4.uid('fetch', uid, "RFC822")
+        message = response[0][1].decode("ascii")
+        # Nachricht wird vorerst NICHT als `\Deleted` markiert
+        # ok, response = self.imap4.uid('store', uid, '+FLAGS', '\\Deleted')
+        ok, response = self.imap4.uid('store', uid, '-FLAGS', '\\Deleted')
+        return message
+
     #
     # TESTING AREA!!!
     #
