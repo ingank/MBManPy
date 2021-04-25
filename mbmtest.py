@@ -21,6 +21,8 @@ def main():
         if (args.get_quota):
             usage, quota = mb.quota()
             print(usage, quota, " = ", usage/quota*100, "%")
+        if (args.get_boxes):
+            print(mb.boxes())
         if (args.select):
             if (args.mbox):
                 print(mb.select(args.mbox))
