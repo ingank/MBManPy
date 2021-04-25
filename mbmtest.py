@@ -28,7 +28,7 @@ def main():
             if (args.mbox):
                 print(mb.examine(args.mbox))
         if (args.test):
-            print(mb.limit(lim=62))
+            print(mb.message_cut(uid='679'))
         if (args.watch):
             mb.idle()
     except:
