@@ -144,7 +144,7 @@ class MBMan:
         #
         # Gibt die Nachricht als Text zurück,
         # die mit Hilfe von `uid` und `mailbox` adressiert wird.
-        # Die Nachricht wird zum Löschen vorgemerkt.
+        # Die Nachricht wird auf dem Server zum Löschen vorgemerkt.
         #
         ok, response = self.select(mailbox)
         ok, response = self.imap4.uid('fetch', uid, "RFC822")
