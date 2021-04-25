@@ -53,19 +53,26 @@ class MBMan:
         self.phrase = phrase
         return self.imap4.login(user, phrase)
 
-    def select(self, mailbox='INBOX'):
-        ok, response = self.imap4.select(mailbox, readonly=False)
-        self.selected_mb = mailbox
-        return ok, response
-
-    def examine(self, mailbox):
-        ok, response = self.imap4.select(mailbox, readonly=True)
-        self.selected_mb = mailbox
+    def select(self, mailbox='INBOX', readonly=False):
+        ok, response = self.imap4.select(mailbox, readonly=readonly)
+        self.FLAGS = self.imap4.response('FLAGS')[1]
+        self.EXISTS = self.imap4.response('EXISTS')[1]
+        self.RECENT = self.imap4.response('RECENT')[1]
+        self.UIDVALIDITY = self.imap4.response('UIDVALIDITY')[1]
+        self.UIDNEXT = self.imap4.response('UIDNEXT')[1]
+        self.SELECTED = mailbox
         return ok, response
 
     def close(self):
         if self.state_is('SELECTED'):
-            return(self.imap4.close())
+            ok, response = self.imap4.close()
+            self.SELECTED = None
+            self.FLAGS = None
+            self.EXISTS = None
+            self.RECENT = None
+            self.UIDVALIDITY = None
+            self.UIDNEXT = None
+            return ok, response
         else:
             return False
 
