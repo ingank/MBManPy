@@ -15,20 +15,20 @@ def main():
     mb = mbman.MBMan(args.debug)
     try:
         if (args.connect):
-            mb.connect(server=args.server)
+            print(mb.connect(server=args.server))
         if (args.login):
-            mb.login(user=args.user, phrase=args.phrase)
+            print(mb.login(user=args.user, phrase=args.phrase))
         if (args.get_quota):
             usage, quota = mb.quota()
             print(usage, quota, " = ", usage/quota*100, "%")
         if (args.select):
             if (args.mbox):
-                mb.select(args.mbox)
+                print(mb.select(args.mbox))
         if (args.examine):
             if (args.mbox):
-                mb.examine(args.mbox)
+                print(mb.examine(args.mbox))
         if (args.test):
-            print(mb.capability())
+            print(mb.limit(lim=62))
         if (args.watch):
             mb.idle()
     except:
