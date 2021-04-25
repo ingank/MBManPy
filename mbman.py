@@ -102,10 +102,10 @@ class MBMan:
     def ls_al(self):
         return self.imap4.uid('fetch', '0:*', "ALL")
 
-    def limit(self, mailbox='INBOX', lim=75):
+    def limit(self, lim=75, mailbox='INBOX'):
         #
         # Gibt eine Liste mit UID's zurück,
-        # die nach der Löschung der zugehörigen Nachrichten auf dem Server
+        # die nach der Löschung der entsprechenden Nachrichten auf dem Server
         # den genutzten Speicher genau unterhalb der limitierten Größe des
         # IMAP-Accounts (Quota) einmessen würde.
         #
