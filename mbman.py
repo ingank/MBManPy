@@ -42,25 +42,28 @@ class MBMan:
     def connect(self, server):
         self.server = server
         self.imap4 = imaplib.IMAP4_SSL(server)
+        return True
 
     def login(self, user, phrase):
         self.user = user
         self.phrase = phrase
-        self.imap4.login(user, phrase)
+        return self.imap4.login(user, phrase)
 
     def select(self, mailbox):
-        self.imap4.select(mailbox, readonly=False)
+        return self.imap4.select(mailbox, readonly=False)
 
     def examine(self, mailbox):
-        self.imap4.select(mailbox, readonly=True)
+        return self.imap4.select(mailbox, readonly=True)
 
     def close(self):
         if self.state_is('SELECTED'):
-            self.imap4.close()
+            return(self.imap4.close())
+        else:
+            return False
 
     def logout(self):
-        self.imap4.close()
-        self.imap4.logout()
+        self.close()
+        return self.imap4.logout()
 
     def quota(self):
         quota_root = ('user/' + self.user)
