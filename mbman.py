@@ -90,7 +90,8 @@ class MBMan:
                         break
                 folders.append([special, line[1]])
             return folders
-        return
+        else:
+            return False
 
     def ls(self):
         return self.imap4.uid('fetch', '0:*', "RFC822.SIZE")
