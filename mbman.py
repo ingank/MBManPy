@@ -14,6 +14,8 @@ import re
 
 class MBMan:
 
+    uid_length = 6
+
     special_use = (
         # RFC 6154
         # IETF Draft: IMAP LIST extension for special-use mailboxes
