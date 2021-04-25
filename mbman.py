@@ -51,8 +51,10 @@ class MBMan:
         self.phrase = phrase
         return self.imap4.login(user, phrase)
 
-    def select(self, mailbox):
-        return self.imap4.select(mailbox, readonly=False)
+    def select(self, mailbox='INBOX'):
+        ok, response = self.imap4.select(mailbox, readonly=False)
+        self.selected_mb = mailbox
+        return ok, response
 
     def examine(self, mailbox):
         return self.imap4.select(mailbox, readonly=True)
