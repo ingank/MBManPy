@@ -57,7 +57,9 @@ class MBMan:
         return ok, response
 
     def examine(self, mailbox):
-        return self.imap4.select(mailbox, readonly=True)
+        ok, response = self.imap4.select(mailbox, readonly=True)
+        self.selected_mb = mailbox
+        return ok, response
 
     def close(self):
         if self.state_is('SELECTED'):
