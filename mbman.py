@@ -171,8 +171,11 @@ class MBMan:
         # Voraussetzung ist der 'SELECTED' State.
         #
         if self.state_is('SELECTED'):
-            home = os.environ['HOME']
-            path = home + '/MBData/' + self.user + '/' + self.selected_mb + '/'
+            path = os.environ['HOME'] + '/'
+            path = path + 'MBData' + '/'
+            path = path + self.user + '/'
+            path = path + self.SELECTED + '/'
+            path = path + self.UIDVALIDITY[0].decode('ascii') + '/'
             if not os.path.exists(path):
                 os.makedirs(path)
             return path
