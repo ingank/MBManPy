@@ -14,8 +14,6 @@ import re
 
 class MBMan:
 
-    uid_length = 6
-
     special_use = (
         # RFC 6154
         # IETF Draft: IMAP LIST extension for special-use mailboxes
@@ -33,6 +31,13 @@ class MBMan:
 
     def __init__(self, debug):
         imaplib.Debug = debug
+        self.SELECTED = None
+        self.FLAGS = None
+        self.EXISTS = None
+        self.RECENT = None
+        self.UIDVALIDITY = None
+        self.UIDNEXT = None
+        self.UIDLENGTH = 7
 
     def state(self):
         return self.imap4.state
