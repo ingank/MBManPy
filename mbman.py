@@ -98,8 +98,30 @@ class MBMan:
     def ls_al(self):
         return self.imap4.uid('fetch', '0:*', "ALL")
 
-    def limit(self, lim):
-        pass
+    def limit(self, mailbox='INBOX', lim=75):
+        #
+        # Gibt eine Liste mit UID's zurück,
+        # die nach der Löschung der zugehörigen Nachrichten auf dem Server
+        # den genutzten Speicher genau unterhalb der limitierten Größe des
+        # IMAP-Accounts (Quota) einmessen würde.
+        #
+        usage, quota = self.quota()
+        lim = int((quota / 100) * lim)
+        if (usage < lim):
+            return []
+        ok, response = self.examine(mailbox)
+        ok, response = self.ls()
+        uid_list = []
+        for r in response:
+            r = r.decode("ascii")
+            r = re.findall(r"RFC822.SIZE (.*) UID (.*)\)$", r)
+            size = int(r[0][0])
+            uid = r[0][1]
+            uid_list.append(uid)
+            usage = usage - size
+            if (usage < lim):
+                break
+        return uid_list
 
     #
     # TESTING AREA!!!
