@@ -156,6 +156,22 @@ class MBMan:
         ok, response = self.imap4.uid('store', uid, '-FLAGS', '\\Deleted')
         return message
 
+    def db_path(self):
+        #
+        # Erzeuge den Pfad auf die lokale Backup-Datenbank
+        # für den aktuellen IMAP-Account, wenn er noch nicht
+        # vorhanden ist. Gib in jedem Fall die Pfadangabe zurück.
+        # Voraussetzung ist der 'SELECTED' State.
+        #
+        if self.state_is('SELECTED'):
+            home = os.environ['HOME']
+            path = home + '/MBData/' + self.user + '/' + self.selected_mb + '/'
+            if not os.path.exists(path):
+                os.makedirs(path)
+            return path
+        else:
+            return None
+
     #
     # TESTING AREA!!!
     #
