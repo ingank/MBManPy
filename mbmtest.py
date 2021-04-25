@@ -28,7 +28,7 @@ def main():
             if (args.mbox):
                 print(mb.examine(args.mbox))
         if (args.test):
-            print(mb.message_cut(uid='679'))
+            print(mb.db_path())
         if (args.watch):
             mb.idle()
     except:
