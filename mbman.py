@@ -71,8 +71,8 @@ class MBMan:
         quota, quota = quota
         quota = quota[0].decode("ascii")
         usage, quota = re.findall(r"STORAGE (\d+) (\d+)", quota)[0]
-        usage = int(usage)
-        quota = int(quota)
+        usage = int(usage) * 1024
+        quota = int(quota) * 1024
         return usage, quota
 
     def folder(self):
