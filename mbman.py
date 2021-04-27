@@ -44,9 +44,6 @@ class MBMan:
     def state(self):
         return self.imap4.state
 
-    def state_is(self, value):
-        return (self.imap4.state == value)
-
     def capability(self):
         return self.imap4.capability()
 
