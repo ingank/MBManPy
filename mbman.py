@@ -148,14 +148,19 @@ class MBMan:
                 break
         return uid_list
 
-    def message_fetch(self, uid, mailbox='INBOX', delete=False):
-        #
-        # Gibt die Nachricht zurück,
-        # die mit Hilfe von `uid` und `mailbox` adressiert wird.
-        # Die Nachricht wird auf dem Server zum Löschen vorgemerkt,
-        # wenn der Schalter `delete=True` gesetzt wird.
-        #
-        ok, response = self.slelect(mailbox, delete)
+    def message_fetch(self, uid: str, delete=False):
+        """
+        Eine Nachricht von der aktuellen Mailbox laden
+
+        Args:
+            uid (str): UID der Nachricht
+            delete (bool, optional): Nachricht auf dem Server löschen?. Defaults to False.
+
+        Returns:
+            (byte): geladene Nachricht
+        """
+        mailbox = 'INBOX'
+        ok, response = self.select(mailbox, readonly=not(delete))
         ok, response = self.imap4.uid('fetch', uid, "RFC822")
         message = response[0][1]
         if delete:
