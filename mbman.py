@@ -55,10 +55,10 @@ class MBMan:
         self.imap4 = imaplib.IMAP4_SSL(server)
         return True
 
-    def login(self, user, phrase):
+    def login(self, user, passwd):
         self.user = user
-        self.phrase = phrase
-        return self.imap4.login(user, phrase)
+        self.passwd = passwd
+        return self.imap4.login(user, passwd)
 
     def select(self, mailbox='INBOX', readonly=False):
         ok, response = self.imap4.select(mailbox, readonly=readonly)
