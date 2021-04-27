@@ -60,28 +60,28 @@ class MBMan:
         self.passwd = passwd
         return self.imap4.login(user, passwd)
 
-    def select(self, mailbox='INBOX', readonly=False):
-        ok, response = self.imap4.select(mailbox, readonly=readonly)
-        self.FLAGS = self.imap4.response('FLAGS')[1]
-        self.EXISTS = self.imap4.response('EXISTS')[1]
-        self.RECENT = self.imap4.response('RECENT')[1]
-        self.UIDVALIDITY = self.imap4.response('UIDVALIDITY')[1]
-        self.UIDNEXT = self.imap4.response('UIDNEXT')[1]
-        self.SELECTED = mailbox
+    def select(self, mailbox='INBOX', readonly=True):
+        ok, response = self.imap4.select(mailbox, readonly)
+        self.mb_flags = self.imap4.response('FLAGS')[1]
+        self.mb_exists = self.imap4.response('EXISTS')[1]
+        self.mb_recent = self.imap4.response('RECENT')[1]
+        self.mb_uidvalidity = self.imap4.response('UIDVALIDITY')[1]
+        self.mb_uidnext = self.imap4.response('UIDNEXT')[1]
+        self.mb_selected = mailbox
         return ok, response
 
     def close(self):
-        if self.state_is('SELECTED'):
+        ok = b'NO'
+        response = b'Not in Selected State'
+        if self.state() == 'SELECTED':
             ok, response = self.imap4.close()
-            self.SELECTED = None
-            self.FLAGS = None
-            self.EXISTS = None
-            self.RECENT = None
-            self.UIDVALIDITY = None
-            self.UIDNEXT = None
-            return ok, response
-        else:
-            return False
+            self.mb_flags = None
+            self.mb_exists = None
+            self.mb_recent = None
+            self.mb_uidvalidity = None
+            self.mb_uidnext = None
+            self.mb_selected = None
+        return ok, response
 
     def logout(self):
         self.close()
