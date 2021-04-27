@@ -124,7 +124,7 @@ class MBMan:
     def ls_al(self):
         return self.imap4.uid('fetch', '0:*', "ALL")
 
-    def limit(self, lim=75, mailbox='INBOX'):
+    def limit(self, lim=75):
         #
         # Gibt eine Liste mit UID's zurück,
         # die nach der Löschung der entsprechenden Nachrichten auf dem Server
