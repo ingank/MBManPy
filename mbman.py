@@ -29,15 +29,17 @@ class MBMan:
         'Starred'  # obsolete
     )
 
-    def __init__(self, debug):
+    def __init__(self, debug=0):
         imaplib.Debug = debug
-        self.SELECTED = None
-        self.FLAGS = None
-        self.EXISTS = None
-        self.RECENT = None
-        self.UIDVALIDITY = None
-        self.UIDNEXT = None
-        self.UIDLENGTH = 7
+        self.debug = debug
+        self.db_root = os.environ['HOME'] + '/MBData/'
+        self.db_uidlength = 7
+        self.mb_selected = None
+        self.mb_uidvalidity = None
+        self.mb_uidnext = None
+        self.mb_flags = None
+        self.mb_exists = None
+        self.mb_recent = None
 
     def state(self):
         return self.imap4.state
