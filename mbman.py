@@ -32,6 +32,9 @@ class MBMan:
     def __init__(self, debug=0):
         imaplib.Debug = debug
         self.debug = debug
+        self.server = None
+        self.user = None
+        self.passwd = None
         self.db_root = os.environ['HOME'] + '/MBData/'
         self.db_uidlength = 7
         self.mb_selected = None
