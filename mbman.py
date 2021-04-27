@@ -172,21 +172,28 @@ class MBMan:
     def db_path(self):
         #
         # Erzeuge den Pfad auf die lokale Backup-Datenbank
-        # für den aktuellen IMAP-Account, wenn er noch nicht
-        # vorhanden ist. Gib in jedem Fall die Pfadangabe zurück.
+        # für den aktuellen IMAP-Account und innerhalb dessen
+        # auf die aktuelle Mailbox, wenn er noch nicht vorhanden ist.
+        # Gib in jedem Fall die Pfadangabe zurück.
         # Voraussetzung ist der 'SELECTED' State.
         #
-        if self.state_is('SELECTED'):
-            path = os.environ['HOME'] + '/'
-            path = path + 'MBData' + '/'
+        if self.mb_selected:
+            path = self.db_root
             path = path + self.user + '/'
-            path = path + self.SELECTED + '/'
-            path = path + self.UIDVALIDITY[0].decode('ascii') + '/'
+            path = path + self.mb_selected + '/'
+            path = path + self.mb_uidvalidity[0].decode('ascii') + '/'
             if not os.path.exists(path):
                 os.makedirs(path)
             return path
         else:
             return None
+
+    def db_save(self, uid, mailbox='INBOX', readonly=True):
+        dummy, response = self.select(mailbox, readonly)
+        path = db_path() + 'test.txt'
+        f = open(path, "w")
+        f.write("Woops! I have deleted the content!")
+        f.close()
 
     #
     # TESTING AREA!!!
