@@ -135,8 +135,7 @@ class MBMan:
         lim = int((quota / 100) * lim)
         if (usage < lim):
             return []
-        ok, response = self.examine(mailbox)
-        ok, response = self.ls()
+        dummy, response = self.ls()
         uid_list = []
         for r in response:
             r = r.decode("ascii")
