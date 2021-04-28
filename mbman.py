@@ -181,7 +181,6 @@ class MBMan:
             path = self.db_root
             path = path + self.user + '/'
             path = path + self.mb_selected + '/'
-            path = path + self.mb_uidvalidity[0].decode('ascii') + '/'
             if not os.path.exists(path):
                 os.makedirs(path)
             return path
