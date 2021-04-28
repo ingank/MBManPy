@@ -188,10 +188,18 @@ class MBMan:
             return None
 
     def db_save(self, uid, mailbox='INBOX', readonly=True):
-        dummy, response = self.select(mailbox, readonly)
-        path = db_path() + 'test.txt'
+        dummy = self.select(mailbox, readonly)
+        message = self.message_fetch(uid)
+        length = len(uid)
+        filename = (
+            self.mb_uidvalidity[0].decode('ascii')
+            + '_'
+            + '0' * (self.db_uidlength - length)
+            + uid
+            + '.eml')
+        path = self.db_path() + filename
         f = open(path, "w")
-        f.write("Woops! I have deleted the content!")
+        f.write(message[1].decode('ascii'))
         f.close()
 
     #
