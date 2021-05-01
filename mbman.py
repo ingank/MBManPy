@@ -181,30 +181,52 @@ class MBMan:
         # Gib in jedem Fall die Pfadangabe zurück.
         # Voraussetzung ist der 'SELECTED' State.
         #
-        if self.mb_selected:
-            path = self.db_root
-            path = path + self.user + '/'
-            path = path + self.mb_selected + '/'
-            if not os.path.exists(path):
-                os.makedirs(path)
-            return path
-        else:
+        if not self.mb_selected:
             return None
+        db_root = self.db_root
+        user = self.user
+        selected = self.mb_selected
+        path = (
+            db_root
+            + user
+            + '/'
+            + selected
+            + '/'
+        )
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path
 
-    def db_save(self, uid, mailbox='INBOX', readonly=True):
-        dummy = self.select(mailbox, readonly)
-        message = self.message_fetch(uid)
+    def db_save(self):
+        """
+        Speichert die letzte heruntergeladende Nachricht in der
+        lokalen Backup-Datenbank
+
+        Returns:
+            [bool]: 'True', wenn Nachricht gespeichert wurde
+        """
+        if not self.mb_selected:
+            return False
+        if not self.last_uid:
+            return False
+        if not self.last_message:
+            return False
+        message = self.last_message
+        uid = self.last_uid
+        uid_val = self.mb_uidvalidity[0].decode('ascii')
         length = len(uid)
+        null_count = self.db_uidlength - length
         filename = (
-            self.mb_uidvalidity[0].decode('ascii')
+            uid_val
             + '_'
-            + '0' * (self.db_uidlength - length)
+            + '0' * null_count
             + uid
             + '.eml')
         path = self.db_path() + filename
         f = open(path, "w")
-        f.write(message[1].decode('ascii'))
+        f.write(message)
         f.close()
+        return True
 
     #
     # TESTING AREA!!!
