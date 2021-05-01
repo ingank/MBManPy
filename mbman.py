@@ -69,20 +69,20 @@ class MBMan:
         self.mb_uidvalidity = self.imap4.response('UIDVALIDITY')[1]
         self.mb_uidnext = self.imap4.response('UIDNEXT')[1]
         self.mb_selected = mailbox
+        self.mb_readonly = readonly
         return ok, response
 
     def close(self):
-        ok = b'NO'
-        response = b'Not in Selected State'
-        if self.state() == 'SELECTED':
-            ok, response = self.imap4.close()
-            self.mb_flags = None
-            self.mb_exists = None
-            self.mb_recent = None
-            self.mb_uidvalidity = None
-            self.mb_uidnext = None
-            self.mb_selected = None
-        return ok, response
+        if not (self.state() == 'SELECTED'):
+            return
+        self.mb_flags = None
+        self.mb_exists = None
+        self.mb_recent = None
+        self.mb_uidvalidity = None
+        self.mb_uidnext = None
+        self.mb_selected = None
+        self.mb_readonly = None
+        return self.imap4.close()
 
     def logout(self):
         self.close()
