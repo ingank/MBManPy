@@ -149,26 +149,29 @@ class MBMan:
                 break
         return uid_list
 
-    def message_fetch(self, uid: str, delete=False):
+    def message_fetch(self, uid: str):
         """
-        Eine Nachricht von der aktuellen Mailbox laden
+        Eine Nachricht von der aktuellen Mailbox laden.
+
+        Wenn Mailbox nicht `readonly` selektiert wurde,
+        dann wird die Nachricht als gelöscht markiert.
+
+        Eine Kopie wird unter self.last_message gespeichert.
 
         Args:
             uid (str): UID der Nachricht
-            delete (bool, optional): Nachricht auf dem Server löschen?. Defaults to False.
 
         Returns:
-            (byte): geladene Nachricht
+            (str): geladene Nachricht
         """
-        mailbox = 'INBOX'
-        ok, response = self.select(mailbox, readonly=not(delete))
-        ok, response = self.imap4.uid('fetch', uid, "RFC822")
-        message = response[0][1]
-        if delete:
-            # Nachricht wird vorerst NICHT als `\Deleted` markiert
-            # self.imap4.uid('store', uid, '+FLAGS', '\\Deleted')
-            self.imap4.uid('store', uid, '-FLAGS', '\\Deleted')
-        return ok, message
+        dummy, response = self.imap4.uid('fetch', uid, "RFC822")
+        message = response[0][1].decode('ascii')
+        self.last_message = message
+        self.last_uid = uid
+        if not self.mb_readonly:
+            pass
+            self.imap4.uid('store', uid, '+FLAGS', '\\Deleted')
+        return message
 
     def db_path(self):
         #
