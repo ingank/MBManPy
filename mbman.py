@@ -173,7 +173,7 @@ class MBMan:
             self.imap4.uid('store', uid, '+FLAGS', '\\Deleted')
         return message
 
-    def db_save(self):
+    def message_save(self):
         """
         Speichert die letzte heruntergeladende Nachricht in der
         lokalen Backup-Datenbank
