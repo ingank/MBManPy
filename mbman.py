@@ -173,30 +173,6 @@ class MBMan:
             self.imap4.uid('store', uid, '+FLAGS', '\\Deleted')
         return message
 
-    def db_path(self):
-        #
-        # Erzeuge den Pfad auf die lokale Backup-Datenbank
-        # für den aktuellen IMAP-Account und innerhalb dessen
-        # auf die aktuelle Mailbox, wenn er noch nicht vorhanden ist.
-        # Gib in jedem Fall die Pfadangabe zurück.
-        # Voraussetzung ist der 'SELECTED' State.
-        #
-        if not self.mb_selected:
-            return None
-        db_root = self.db_root
-        user = self.user
-        selected = self.mb_selected
-        path = (
-            db_root
-            + user
-            + '/'
-            + selected
-            + '/'
-        )
-        if not os.path.exists(path):
-            os.makedirs(path)
-        return path
-
     def db_save(self):
         """
         Speichert die letzte heruntergeladende Nachricht in der
@@ -227,6 +203,30 @@ class MBMan:
         f.write(message)
         f.close()
         return True
+
+    def db_path(self):
+        #
+        # Erzeuge den Pfad auf die lokale Backup-Datenbank
+        # für den aktuellen IMAP-Account und innerhalb dessen
+        # auf die aktuelle Mailbox, wenn er noch nicht vorhanden ist.
+        # Gib in jedem Fall die Pfadangabe zurück.
+        # Voraussetzung ist der 'SELECTED' State.
+        #
+        if not self.mb_selected:
+            return None
+        db_root = self.db_root
+        user = self.user
+        selected = self.mb_selected
+        path = (
+            db_root
+            + user
+            + '/'
+            + selected
+            + '/'
+        )
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path
 
     #
     # TESTING AREA!!!
