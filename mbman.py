@@ -257,10 +257,7 @@ class MBMan:
             + uid
             + '.eml')
         path = self.db_path() + filename
-        f = open(path, "w")
-        f.write(message)
-        f.close()
-        return True
+        return path
 
     def db_path(self):
         #
