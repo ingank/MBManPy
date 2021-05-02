@@ -98,7 +98,8 @@ class MBMan:
 
     def close(self):
         if not self.mb_selected:
-            return
+            return None
+        typ, data = self.imap4.close()
         self.mb_flags = None
         self.mb_exists = None
         self.mb_recent = None
@@ -109,14 +110,18 @@ class MBMan:
         self.db_autosave = None
         self.db_path = None
         self.db_file = None
-        return self.imap4.close()
+        return typ, data
 
     def logout(self):
+        if not self.imap4:
+            return None
+        typ, data = self.imap4.logout()
         self.close()
         self.server = None
         self.user = None
         self.passwd = None
-        return self.imap4.logout()
+        self.imap4 = None
+        return typ, data
 
     def idle(self):
         # Copyright (c) 2012 Mathieu Lecarme
