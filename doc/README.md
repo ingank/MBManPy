@@ -11,6 +11,7 @@ automatisch erledigen.
 ### Version 1
 * Adressierung von Nachrichten mittels UID-Sequence-Set
 * Nachrichten vom IMAP-Konto herunterladen
+* Auf neue Nachrichten warten (IDLE)
 * Nachrichten entfernt löschen
   * konkret
   * automatisiert
