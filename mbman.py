@@ -37,6 +37,7 @@ class MBMan:
         self.passwd = None
         self.db_root = os.environ['HOME'] + '/MBData/'
         self.db_uidlength = 8
+        self.db_autosave = None
         self.mb_selected = None
         self.mb_readonly = None
         self.mb_uidvalidity = None
