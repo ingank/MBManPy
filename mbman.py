@@ -31,6 +31,7 @@ class MBMan:
 
     def __init__(self, debug=0):
         imaplib.Debug = debug
+        self.imap4 = None
         self.debug = debug
         self.server = None
         self.user = None
