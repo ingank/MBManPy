@@ -100,6 +100,7 @@ class MBMan:
         self.mb_uidnext = None
         self.mb_selected = None
         self.mb_readonly = None
+        self.db_autosave = None
         return self.imap4.close()
 
     def logout(self):
