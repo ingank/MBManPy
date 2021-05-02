@@ -80,10 +80,18 @@ class MBMan:
         self.mb_uidnext = self.imap4.response('UIDNEXT')[1]
         self.mb_selected = mailbox
         self.mb_readonly = readonly
-        return ok, response
+        self.db_autosave = autosave
+        if autosave:
+            path = self.db_root
+            path += self.user + '/'
+            path += mailbox + '/'
+            if not os.path.exists(path):
+                os.makedirs(path)
+            self.db_path = path
+        return typ, data
 
     def close(self):
-        if not (self.state() == 'SELECTED'):
+        if not self.mb_selected:
             return
         self.mb_flags = None
         self.mb_exists = None
