@@ -119,24 +119,23 @@ class MBMan:
 
     def boxes(self):
         ok, response = self.imap4.list()
-        if (ok == 'OK'):
-            folders = []
-            for line in response:
-                line = line.decode("ascii")
-                line = re.split(' "." ', line)
-                line = (
-                    re.findall(r"^\((.*)\)$", line[0])[0],
-                    re.findall(r"^\"(.*)\"$", line[1])[0]
-                )
-                special = 'NoSpecial'
-                for su in self.special_use:
-                    if (line[0].find(su) != -1):
-                        special = su
-                        break
-                folders.append([special, line[1]])
-            return folders
-        else:
-            return False
+        if not (ok == 'OK'):
+            return None
+        folders = []
+        for line in response:
+            line = line.decode("ascii")
+            line = re.split(' "." ', line)
+            line = (
+                re.findall(r"^\((.*)\)$", line[0])[0],
+                re.findall(r"^\"(.*)\"$", line[1])[0]
+            )
+            special = 'NoSpecial'
+            for su in self.special_use:
+                if (line[0].find(su) != -1):
+                    special = su
+                    break
+            folders.append([special, line[1]])
+        return folders
 
     def ls(self):
         return self.imap4.uid('fetch', '0:*', "RFC822.SIZE")
