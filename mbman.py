@@ -62,8 +62,17 @@ class MBMan:
         self.passwd = passwd
         return self.imap4.login(user, passwd)
 
-    def select(self, mailbox='INBOX', readonly=True):
-        ok, response = self.imap4.select(mailbox, readonly)
+    def select(self, mailbox='INBOX', readonly=True, autosave=True):
+        """Eine Mailbox anwählen.
+
+        Args:
+            mailbox (str, optional): Name der Mailbox. Defaults to 'INBOX'.
+            readonly (bool, optional): Schreibgeschützt öffnen? Defaults to True.
+
+        Returns:
+            (typ,[data]): typ = Result, data = Response
+        """
+        typ, data = self.imap4.select(mailbox, readonly)
         self.mb_flags = self.imap4.response('FLAGS')[1]
         self.mb_exists = self.imap4.response('EXISTS')[1]
         self.mb_recent = self.imap4.response('RECENT')[1]
