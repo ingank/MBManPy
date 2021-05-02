@@ -259,30 +259,6 @@ class MBMan:
         path = self.db_path() + filename
         return path
 
-    def db_path(self):
-        #
-        # Erzeuge den Pfad auf die lokale Backup-Datenbank
-        # für den aktuellen IMAP-Account und innerhalb dessen
-        # auf die aktuelle Mailbox, wenn er noch nicht vorhanden ist.
-        # Gib in jedem Fall die Pfadangabe zurück.
-        # Voraussetzung ist der 'SELECTED' State.
-        #
-        if not self.mb_selected:
-            return None
-        db_root = self.db_root
-        user = self.user
-        selected = self.mb_selected
-        path = (
-            db_root
-            + user
-            + '/'
-            + selected
-            + '/'
-        )
-        if not os.path.exists(path):
-            os.makedirs(path)
-        return path
-
     #
     # TESTING AREA!!!
     #
