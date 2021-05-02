@@ -205,25 +205,49 @@ class MBMan:
         if not self.mb_readonly:
             pass
             self.imap4.uid('store', uid, '+FLAGS', '\\Deleted')
+        if self.db_autosave:
+            uid_val = self.mb_uidvalidity[0].decode('ascii')
+            length = len(uid)
+            null_count = self.db_uidlength - length
+            file_path = self.db_path
+            file_path += uid_val + '_'
+            file_path += '0' * null_count + uid
+            file_path += '.eml'
+            self.message_save(message, file_path)
+            self.db_file = file_path
         return message
 
-    def message_save(self):
+    def message_save(self, message: str, path: str):
         """
-        Speichert die letzte heruntergeladende Nachricht in der
-        lokalen Backup-Datenbank
+        Speichert eine Nachricht in einer Datei.
+
+        Args:
+            message (str): Die komplette Nachricht als String
+            path (str): Der Dateiname als FQDN
 
         Returns:
-            [bool]: 'True', wenn Nachricht gespeichert wurde
+            (bool): 'True', wenn Nachricht gespeichert wurde
         """
-        if not self.mb_selected:
-            return False
-        if not self.last_uid:
-            return False
-        if not self.last_message:
-            return False
-        message = self.last_message
-        uid = self.last_uid
-        uid_val = self.mb_uidvalidity[0].decode('ascii')
+        try:
+            f = open(path, "w")
+            f.write(message)
+            f.close()
+            return True
+        except Exception:
+            return None
+
+    def message_path(self, selected, uid, uid_val):
+        """[summary]
+
+        Args:
+            selected ([type]): [description]
+            uid ([type]): [description]
+            uid_val ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        uid_val = uid_val[0].decode('ascii')
         length = len(uid)
         null_count = self.db_uidlength - length
         filename = (
