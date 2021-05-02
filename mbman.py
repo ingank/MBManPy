@@ -236,29 +236,6 @@ class MBMan:
         except Exception:
             return None
 
-    def message_path(self, selected, uid, uid_val):
-        """[summary]
-
-        Args:
-            selected ([type]): [description]
-            uid ([type]): [description]
-            uid_val ([type]): [description]
-
-        Returns:
-            [type]: [description]
-        """
-        uid_val = uid_val[0].decode('ascii')
-        length = len(uid)
-        null_count = self.db_uidlength - length
-        filename = (
-            uid_val
-            + '_'
-            + '0' * null_count
-            + uid
-            + '.eml')
-        path = self.db_path() + filename
-        return path
-
     #
     # TESTING AREA!!!
     #
