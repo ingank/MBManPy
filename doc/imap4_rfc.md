@@ -14,3 +14,5 @@
   * STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES
 * RFC 6855
   * IMAP Support for UTF-8
+* RFC 6530
+  * Overview and Framework for Internationalized Email
