@@ -35,8 +35,13 @@ class MBMan:
         self.server = None
         self.user = None
         self.passwd = None
+        self.last_message = None
+        self.last_message_path = None
+        self.last_uid = None
         self.db_root = os.environ['HOME'] + '/MBData/'
         self.db_uidlength = 8
+        self.db_path = None
+        self.db_file = None
         self.db_autosave = None
         self.mb_selected = None
         self.mb_readonly = None
@@ -101,10 +106,15 @@ class MBMan:
         self.mb_selected = None
         self.mb_readonly = None
         self.db_autosave = None
+        self.db_path = None
+        self.db_file = None
         return self.imap4.close()
 
     def logout(self):
         self.close()
+        self.server = None
+        self.user = None
+        self.passwd = None
         return self.imap4.logout()
 
     def quota(self):
