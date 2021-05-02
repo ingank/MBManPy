@@ -144,12 +144,18 @@ class MBMan:
         return self.imap4.uid('fetch', '0:*', "ALL")
 
     def limit(self, lim=75):
-        #
-        # Gibt eine Liste mit UID's zurück,
-        # die nach der Löschung der entsprechenden Nachrichten auf dem Server
-        # den genutzten Speicher genau unterhalb der limitierten Größe des
-        # IMAP-Accounts (Quota) einmessen würde.
-        #
+        """
+        Gibt eine Liste mit UID's zurück,
+        die nach der Löschung der entsprechenden Nachrichten auf dem Server
+        den genutzten Speicher genau unterhalb der limitierten Größe des
+        MAP-Accounts (Quota) einmessen würde.
+
+        Args:
+            lim (int, optional): Der Limit-Wert in Prozent. Defaults to 75.
+
+        Returns:
+            ([uid:str, ...]): Liste von UID's oder leere Liste
+        """
         usage, quota = self.quota()
         lim = int((quota / 100) * lim)
         if (usage < lim):
