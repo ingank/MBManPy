@@ -22,6 +22,7 @@ Es gibt vier Zustände einer IMAP4 Client-Server-Verbindung.
   * Der _Authenticated State_ kann herbeigeführt werden mit den Befehlen:
     * `AUTHENTICATE`
     * `LOGIN`
+    * `STARTTLS`
   * Mögliche IMAP-Befehle (Capabilities):
     * `APPEND`
     * `CAPABILITY`
