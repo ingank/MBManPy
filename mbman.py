@@ -115,8 +115,8 @@ class MBMan:
     def logout(self):
         if not self.imap4:
             return None
+        typ, data = self.close()
         typ, data = self.imap4.logout()
-        self.close()
         self.server = None
         self.user = None
         self.passwd = None
