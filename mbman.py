@@ -291,7 +291,7 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--server", metavar="foo", help="given server name")
     parser.add_argument("-u", "--user", metavar="foo", help="given username")
     parser.add_argument("-p", "--passwd", metavar="foo", help="given password")
-    parser.add_argument("-m", "--mbox", metavar="foo", help="select a mailbox")
+    parser.add_argument("-m", "--folder", metavar="foo", help="select a mailbox folder")
     parser.add_argument("-l", "--limit", metavar="int", type=int, help="set limit to int percent")
     parser.add_argument("-i", "--uid", metavar="int", type=int, help="select message with uid int")
     parser.add_argument("-d", "--debug", metavar="int", type=int, help="set debug level to int", default=0)
@@ -299,7 +299,7 @@ if __name__ == "__main__":
 #    parser.add_argument("--connect", action="store_true", help="connect to imap server")
 #    parser.add_argument("--login", action="store_true", help="login to an imap user account")
     parser.add_argument("--get-quota", action="store_true", help="print infos about quota and usage")
-    parser.add_argument("--get-boxes", action="store_true", help="print a list of available mailboxes")
+    parser.add_argument("--get-folders", action="store_true", help="print a list of available mailbox folders")
     parser.add_argument("--get-info", action="store_true", help="print some infos about the mbman object")
     parser.add_argument("--get-message", action="store_true", help="get a message from server")
     parser.add_argument("--select", action="store_true", help="select a specific mailbox (use with parameter '-m'")
@@ -318,13 +318,13 @@ if __name__ == "__main__":
         if (args.get_quota):
             usage, quota = mb.quota()
             print(usage, quota, " = ", usage/quota*100, "%")
-        if (args.get_boxes):
-            print(mb.boxes())
-        if (args.mbox):
+        if (args.get_folders):
+            print(mb.folders())
+        if (args.folder):
             if (args.select):
-                print(mb.select(args.mbox, readonly=False))
+                print(mb.select(args.folder, readonly=False))
             if (args.examine):
-                print(mb.select(args.mbox, readonly=True))
+                print(mb.select(args.folder, readonly=True))
     except:
         mb.logout()
         raise
