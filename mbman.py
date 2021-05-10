@@ -168,7 +168,7 @@ class MBMan:
         quota = int(quota) * 1024
         return usage, quota
 
-    def boxes(self):
+    def folders(self):
         ok, response = self.imap4.list()
         if not (ok == 'OK'):
             return None
