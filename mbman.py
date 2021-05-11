@@ -283,25 +283,21 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description='A Python program using modul mbman.py')
-    # Optionen
     parser.add_argument("--check-backup", action="store_true", help="check backup-files against server-data")
     parser.add_argument("--print-args", action="store_true", help="print parsed command line arguments")
-    # Parameter
-    parser.add_argument("--server", metavar="foo", help="given server name")
-    parser.add_argument("--user", metavar="foo", help="given username")
-    parser.add_argument("--password", metavar="foo", help="given password")
+    parser.add_argument("--server", metavar="foo", help="connect to server foo")
+    parser.add_argument("--user", metavar="foo", help="login as user foo")
+    parser.add_argument("--password", metavar="foo", help="login with password foo")
     parser.add_argument("--set-limit", metavar="int", type=int, help="set limit to int percent")
     parser.add_argument("--uid", metavar="int", type=int, help="select message with uid int")
     parser.add_argument("--debug", metavar="int", type=int, help="set debug level to int", default=0)
-    # Befehle
     parser.add_argument("--get-quota", action="store_true", help="print infos about quota and usage")
     parser.add_argument("--get-folders", action="store_true", help="print a list of available mailbox folders")
     parser.add_argument("--get-info", action="store_true", help="print some infos about the mbman object")
-    parser.add_argument("--get-message", action="store_true", help="get a message from server")
+    parser.add_argument("--get-message", metavar="uid", type=int, help="get message with specific uid from server")
     parser.add_argument("--select", metavar="foo", help="select a specific mailbox read/write", default="INBOX")
     parser.add_argument("--examine", metavar="foo", help="select a specific mailbox readonly", default="INBOX")
     parser.add_argument("--autolimit", action="store_true", help="automatic limit and backup the mailbox")
-    #-#
     args = parser.parse_args()
     mb = MBMan(args.debug)
     try:
