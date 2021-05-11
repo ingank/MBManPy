@@ -290,7 +290,6 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--server", metavar="foo", help="given server name")
     parser.add_argument("-u", "--user", metavar="foo", help="given username")
     parser.add_argument("-p", "--passwd", metavar="foo", help="given password")
-    parser.add_argument("-m", "--folder", metavar="foo", help="select a mailbox folder")
     parser.add_argument("-l", "--limit", metavar="int", type=int, help="set limit to int percent")
     parser.add_argument("-i", "--uid", metavar="int", type=int, help="select message with uid int")
     parser.add_argument("-d", "--debug", metavar="int", type=int, help="set debug level to int", default=0)
