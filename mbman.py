@@ -295,8 +295,6 @@ if __name__ == "__main__":
     parser.add_argument("-i", "--uid", metavar="int", type=int, help="select message with uid int")
     parser.add_argument("-d", "--debug", metavar="int", type=int, help="set debug level to int", default=0)
     # Befehle
-#    parser.add_argument("--connect", action="store_true", help="connect to imap server")
-#    parser.add_argument("--login", action="store_true", help="login to an imap user account")
     parser.add_argument("--get-quota", action="store_true", help="print infos about quota and usage")
     parser.add_argument("--get-folders", action="store_true", help="print a list of available mailbox folders")
     parser.add_argument("--get-info", action="store_true", help="print some infos about the mbman object")
