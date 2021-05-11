@@ -301,8 +301,8 @@ if __name__ == "__main__":
     parser.add_argument("--get-folders", action="store_true", help="print a list of available mailbox folders")
     parser.add_argument("--get-info", action="store_true", help="print some infos about the mbman object")
     parser.add_argument("--get-message", action="store_true", help="get a message from server")
-    parser.add_argument("--select", action="store_true", help="select a specific mailbox (use with parameter '-m'")
-    parser.add_argument("--examine", action="store_true", help="select a specific mailbox readonly")
+    parser.add_argument("--select", metavar="foo", help="select a specific mailbox read/write", default="INBOX")
+    parser.add_argument("--examine", metavar="foo", help="select a specific mailbox readonly", default="INBOX")
     parser.add_argument("--autolimit", action="store_true", help="automatic limit and backup the mailbox")
     #-#
     args = parser.parse_args()
