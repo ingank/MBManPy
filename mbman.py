@@ -287,12 +287,12 @@ if __name__ == "__main__":
     parser.add_argument("--check-backup", action="store_true", help="check backup-files against server-data")
     parser.add_argument("--print-args", action="store_true", help="print parsed command line arguments")
     # Parameter
-    parser.add_argument("-s", "--server", metavar="foo", help="given server name")
-    parser.add_argument("-u", "--user", metavar="foo", help="given username")
-    parser.add_argument("-p", "--passwd", metavar="foo", help="given password")
-    parser.add_argument("-l", "--limit", metavar="int", type=int, help="set limit to int percent")
-    parser.add_argument("-i", "--uid", metavar="int", type=int, help="select message with uid int")
-    parser.add_argument("-d", "--debug", metavar="int", type=int, help="set debug level to int", default=0)
+    parser.add_argument("--server", metavar="foo", help="given server name")
+    parser.add_argument("--user", metavar="foo", help="given username")
+    parser.add_argument("--password", metavar="foo", help="given password")
+    parser.add_argument("--set-limit", metavar="int", type=int, help="set limit to int percent")
+    parser.add_argument("--uid", metavar="int", type=int, help="select message with uid int")
+    parser.add_argument("--debug", metavar="int", type=int, help="set debug level to int", default=0)
     # Befehle
     parser.add_argument("--get-quota", action="store_true", help="print infos about quota and usage")
     parser.add_argument("--get-folders", action="store_true", help="print a list of available mailbox folders")
