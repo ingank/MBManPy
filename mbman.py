@@ -284,7 +284,6 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='A Python program using modul mbman.py')
     # Optionen
-    parser.add_argument("-x", "--expunge", action="store_true", help="delete messages on server")
     parser.add_argument("-c", "--check-validity", action="store_true", help="check backup-files against server-data")
     parser.add_argument("-a", "--print-args", action="store_true", help="print parsed command line arguments")
     # Parameter
