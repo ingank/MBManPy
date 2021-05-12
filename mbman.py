@@ -282,41 +282,44 @@ if __name__ == "__main__":
 
     import argparse
 
-    parser = argparse.ArgumentParser(description='A Python program using modul mbman.py')
-    parser.add_argument("--check-backup", action="store_true", help="check backup-files against server-data")
-    parser.add_argument("--print-args", action="store_true", help="print parsed command line arguments")
-    parser.add_argument("--server", metavar="foo", help="connect to server foo")
-    parser.add_argument("--user", metavar="foo", help="login as user foo")
-    parser.add_argument("--password", metavar="foo", help="login with password foo")
-    parser.add_argument("--set-limit", metavar="int", type=int, help="set limit to int percent")
-    parser.add_argument("--uid", metavar="int", type=int, help="select message with uid int")
-    parser.add_argument("--debug", metavar="int", type=int, help="set debug level to int", default=0)
-    parser.add_argument("--get-quota", action="store_true", help="print infos about quota and usage")
-    parser.add_argument("--get-folders", action="store_true", help="print a list of available mailbox folders")
-    parser.add_argument("--get-info", action="store_true", help="print some infos about the mbman object")
-    parser.add_argument("--get-message", metavar="uid", type=int, help="get message with specific uid from server")
-    parser.add_argument("--select", metavar="foo", help="select a specific mailbox read/write", default="INBOX")
-    parser.add_argument("--examine", metavar="foo", help="select a specific mailbox readonly", default="INBOX")
-    parser.add_argument("--autolimit", action="store_true", help="automatic limit and backup the mailbox")
-    args = parser.parse_args()
-    mb = MBMan(args.debug)
     try:
+        parser = argparse.ArgumentParser(description='A Python program using modul mbman.py')
+        parser.add_argument("--debug", metavar="int", type=int, help="set debug level to int", default=4)
+        parser.add_argument("--print-args", action="store_true", help="print parsed command line arguments")
+        parser.add_argument("--connect", type=str, metavar="foo", help="connect to server foo")
+        parser.add_argument("--login", nargs=2, type=str, metavar="foo", help="connect to server foo")
+        parser.add_argument("--select", nargs='?', type=str, metavar="foo", help="select specific mailbox", const="INBOX")
+        parser.add_argument("--examine", nargs='?', type=str, metavar="foo", help="select specific mailbox readonly", const="INBOX")
+        parser.add_argument("--quota", action="store_true", help="print infos about quota and usage")
+        parser.add_argument("--folders", action="store_true", help="print a list of available mailbox folders")
+        parser.add_argument("--ls", action="store_true", help="print a list of messages with size")
+        # parser.add_argument("--get-info", action="store_true", help="print some infos about the mbman object")
+        # parser.add_argument("--get-message", metavar="uid", type=int, help="get message with specific uid from server")
+        # parser.add_argument("--autolimit", metavar="percent", type=int, help="limit mailbox to given value", default=80)
+        # parser.add_argument("--no-backup", action="store_true", help="must not backup downloaded messages nor use backup")
+        args = parser.parse_args()
+        mb = MBMan(args.debug)
         if (args.print_args):
             print(args)
-        if (args.server):
-            print(mb.connect(server=args.server))
-        if (args.user and args.passwd):
-            print(mb.login(user=args.user, passwd=args.passwd))
-        if (args.get_quota):
+            raise(BaseException)
+        if (args.debug >= 4):
+            print(args)
+        if (args.connect):
+            print(mb.connect(server=args.connect))
+        if (args.login):
+            print(mb.login(user=args.login[0], passwd=args.login[1]))
+        if (args.select):
+            print(mb.select(args.select, readonly=False))
+        if (args.examine):
+            print(mb.select(args.examine, readonly=True))
+        if (args.quota):
             usage, quota = mb.quota()
-            print(usage, quota, " = ", usage/quota*100, "%")
-        if (args.get_folders):
+            print("Usage:", usage, ", Quota:", quota, "(", usage/quota*100, "% )")
+        if (args.folders):
             print(mb.folders())
-        if (args.folder):
-            if (args.select):
-                print(mb.select(args.folder, readonly=False))
-            if (args.examine):
-                print(mb.select(args.folder, readonly=True))
+        if (args.ls):
+            print(mb.ls())
+            # TODO mb.ls sollte die Werte schon parsen
     except:
         mb.logout()
         raise
