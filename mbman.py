@@ -98,7 +98,7 @@ class MBMan:
 
     def close(self):
         if not self.mb_selected:
-            return None
+            return None, None
         typ, data = self.imap4.close()
         self.mb_flags = None
         self.mb_exists = None
@@ -114,7 +114,7 @@ class MBMan:
 
     def logout(self):
         if not self.imap4:
-            return None
+            return None, None
         typ, data = self.close()
         typ, data = self.imap4.logout()
         self.server = None
