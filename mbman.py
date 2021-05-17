@@ -53,19 +53,21 @@ class MBMan:
         self.mb_exists = None
         self.mb_recent = None
 
-    def state(self):
-        return self.imap4.state
-
-    def capability(self):
-        return self.imap4.capability()
-
     def connect(self, server):
+        """SSL-Verbindung zu einem IMAP4 Server herstellen.
+
+        (typ, [data]) = <instance>.connect(server)
+
+        'typ' ist 'OK', wenn Anmeldung erfolgreich
+        'data' beinhaltet den Willkommensantwort des Servers
+        'server' ist eine Serveradresse
+        """
         self.server = server
         self.imap4 = imaplib.IMAP4_SSL(server)
-        text = re.findall(
-            br'\* (?P<type>[A-Z-]+) (?P<data>.*)?',
-            self.imap4.welcome)[0][1]
-        return ('OK', [text])
+        wc = self.imap4.welcome
+        typ, data = re.findall(br'\* ([A-Z-]+) (.*)?', wc)[0]
+        typ = typ.decode('ascii')
+        return (typ, [data])
 
     def login(self, user, passwd):
         self.user = user
