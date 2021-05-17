@@ -62,7 +62,10 @@ class MBMan:
     def connect(self, server):
         self.server = server
         self.imap4 = imaplib.IMAP4_SSL(server)
-        return True
+        text = re.findall(
+            br'\* (?P<type>[A-Z-]+) (?P<data>.*)?',
+            self.imap4.welcome)[0][1]
+        return ('OK', [text])
 
     def login(self, user, passwd):
         self.user = user
