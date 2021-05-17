@@ -129,6 +129,12 @@ class MBMan:
         self.imap4 = None
         return typ, data
 
+    def state(self):
+        return self.imap4.state
+
+    def capability(self):
+        return self.imap4.capability()
+
     def idle(self):
         # Copyright (c) 2012 Mathieu Lecarme
         # This code is licensed under the MIT license
