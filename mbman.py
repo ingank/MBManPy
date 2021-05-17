@@ -58,8 +58,8 @@ class MBMan:
 
         (typ, [data]) = <instance>.connect(server)
 
-        'typ' ist 'OK', wenn Anmeldung erfolgreich
-        'data' beinhaltet den Willkommensantwort des Servers
+        'typ' ist 'OK', wenn Verbindung erfolgreich
+        'data' beinhaltet die Willkommensantwort des Servers
         'server' ist eine Serveradresse
         """
         self.server = server
@@ -70,6 +70,15 @@ class MBMan:
         return (typ, [data])
 
     def login(self, user, passwd):
+        """Auf einem IMAP4 Server einloggen.
+
+        (typ, [data]) = <instance>.login(user, passwd)
+
+        'typ' ist 'OK', wenn Login erfolgreich
+        'data' beinhaltet die letzte Antwort des Servers auf den Loginversuch
+        'user' Benutzername zum gewünschten Account
+        'passwd' dazugehöriges Passwort
+        """
         self.user = user
         self.passwd = passwd
         return self.imap4.login(user, passwd)
