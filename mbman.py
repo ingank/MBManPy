@@ -86,12 +86,12 @@ class MBMan:
     def select(self, mailbox='INBOX', readonly=True, autosave=True):
         """Eine Mailbox anwählen.
 
-        Args:
-            mailbox (str, optional): Name der Mailbox. Defaults to 'INBOX'.
-            readonly (bool, optional): Schreibgeschützt öffnen? Defaults to True.
+        (typ, [data]) = <instance>.select(mailbox, readonly)
 
-        Returns:
-            (typ,[data]): typ = Result, data = Response
+        'typ' ist 'OK', wenn SELECT erfolgreich
+        'data' beinhaltet die Antwort des Servers auf den SELECT-Befehl
+        'mailbox' (str, optional) ist der Name der gewünschten Mailbox. Voreinstellung: 'INBOX'
+        'readonly' (bool, optional): Voreinstellung: True
         """
         typ, data = self.imap4.select(mailbox, readonly)
         self.mb_flags = self.imap4.response('FLAGS')[1]
