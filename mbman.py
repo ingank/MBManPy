@@ -180,9 +180,19 @@ class MBMan:
         return usage, quota
 
     def folders(self):
-        ok, response = self.imap4.list()
-        if not (ok == 'OK'):
-            return None
+        """Alle Mailbox-Ordner (Namen) abfragen.
+
+        (typ, [folders]) = <instance>.folders()
+
+        'typ' ist 'OK', wenn LIST-Befehl erfolgreich war. In diesem Fall enthält
+        'folders' die Liste mit allen vorhandenen Ordern
+
+        Wenn der LIST-Befehl nicht erfolgreich war, dann enthält
+        'folders' die entsprechende Serverantwort
+        """
+        (typ, response) = self.imap4.list()
+        if not (typ == 'OK'):
+            return (typ, response)
         folders = []
         for line in response:
             line = line.decode("ascii")
@@ -197,7 +207,7 @@ class MBMan:
                     special = su
                     break
             folders.append([special, line[1]])
-        return folders
+        return (typ, folders)
 
     def ls(self):
         return self.imap4.uid('fetch', '0:*', "RFC822.SIZE")
