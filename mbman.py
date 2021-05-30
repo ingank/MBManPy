@@ -112,7 +112,7 @@ class MBMan:
         return typ, data
 
     def close(self):
-        """Aktuelle Mailbox schließen (kein Logout)
+        """Aktuelle Mailbox schließen (kein Logout).
 
         (typ, [data]) = <instance>.close()
 
