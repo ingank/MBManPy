@@ -136,6 +136,16 @@ class MBMan:
         return typ, data
 
     def logout(self):
+        """Verbindung zum Server komplett abbauen.
+        Dabei ist unerheblich, ob eine Mailbox angewählt ist.
+        Die Verbindung wird in jedem Fall kontrolliert abgebaut.
+
+        (typ, [data]) = <instance>.logout()
+
+        'typ' ist 'OK', wenn LOGOUT erfolgreich
+        'data' beinhaltet die Antwort des Servers auf den LOGOUT-Befehl
+        'typ' und 'data' werden auf None gesetzt, wenn keine Client-Server-Verbindung bestand        
+        """
         if not self.imap4:
             return None, None
         typ, data = self.close()
