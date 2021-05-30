@@ -88,8 +88,8 @@ class MBMan:
 
         (typ, [data]) = <instance>.select(mailbox, readonly)
 
-        'typ' ist 'OK', wenn SELECT erfolgreich
-        'data' beinhaltet die Antwort des Servers auf den SELECT-Befehl
+        'typ' ist 'OK', wenn SELECT oder EXAMINE erfolgreich waren
+        'data' beinhaltet die Antwort des Servers auf den SELECT- oder EXAMINE-Befehl
         'mailbox' (str, optional) ist der Name der gewünschten Mailbox. Voreinstellung: 'INBOX'
         'readonly' (bool, optional): Voreinstellung: True
         """
