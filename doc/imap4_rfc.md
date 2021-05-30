@@ -12,6 +12,8 @@
   * IMAP4 IDLE command
 * RFC 3501
   * INTERNET MESSAGE ACCESS PROTOCOL - VERSION 4rev1 (2003)
+* RFC 6154
+  * IMAP LIST Extension for Special-Use Mailboxes
 * RFC 6855
   * IMAP Support for UTF-8
 * RFC 6530
