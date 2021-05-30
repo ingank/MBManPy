@@ -112,6 +112,14 @@ class MBMan:
         return typ, data
 
     def close(self):
+        """Aktuelle Mailbox schließen (kein Logout)
+
+        (typ, [data]) = <instance>.close()
+
+        'typ' ist 'OK', wenn CLOSE erfolgreich
+        'data' beinhaltet die Antwort des Servers auf den CLOSE-Befehl
+        'typ' und 'data' werden auf None gesetzt, wenn keine Mailbox angewählt war        
+        """
         if not self.mb_selected:
             return None, None
         typ, data = self.imap4.close()
