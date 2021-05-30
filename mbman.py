@@ -349,6 +349,8 @@ if __name__ == "__main__":
         parser.add_argument("--login", nargs=2, type=str, metavar="foo", help="connect to server foo")
         parser.add_argument("--select", nargs='?', type=str, metavar="foo", help="select specific mailbox", const="INBOX")
         parser.add_argument("--examine", nargs='?', type=str, metavar="foo", help="select specific mailbox readonly", const="INBOX")
+        parser.add_argument("--state", action="store_true", help="print infos about the actual state of connection")
+        parser.add_argument("--capability", action="store_true", help="print infos about capability in actual state")
         parser.add_argument("--quota", action="store_true", help="print infos about quota and usage")
         parser.add_argument("--folders", action="store_true", help="print a list of available mailbox folders")
         parser.add_argument("--ls", action="store_true", help="print a list of messages with size")
@@ -371,6 +373,10 @@ if __name__ == "__main__":
             print(mb.select(args.select, readonly=False))
         if (args.examine):
             print(mb.select(args.examine, readonly=True))
+        if (args.state):
+            print(mb.state())
+        if (args.capability):
+            print(mb.capability())
         if (args.quota):
             usage, quota = mb.quota()
             print("Usage:", usage, ", Quota:", quota, "(", usage/quota*100, "% )")
