@@ -162,6 +162,23 @@ class MBMan:
     def capability(self):
         return self.imap4.capability()
 
+    def quota(self):
+        """Speicherplatz des IMAP-Accounts abfragen.
+
+        (usage, quota) = <instance>.quota()
+
+        'usage' ist die Belegung des Speichers in Oktets (Byte)
+        'quota' ist der für diesen Account bereitgestellte Speicher in Oktets
+        """
+        quota_root = ('user/' + self.user)
+        quota = self.imap4.getquota(quota_root)
+        quota, quota = quota
+        quota = quota[0].decode("ascii")
+        usage, quota = re.findall(r"STORAGE (\d+) (\d+)", quota)[0]
+        usage = int(usage) * 1024
+        quota = int(quota) * 1024
+        return usage, quota
+
     def idle(self):
         # Copyright (c) 2012 Mathieu Lecarme
         # This code is licensed under the MIT license
@@ -196,16 +213,6 @@ class MBMan:
         connection.send(b'DONE\r\n')
         connection.readline()
         self.loop = False
-
-    def quota(self):
-        quota_root = ('user/' + self.user)
-        quota = self.imap4.getquota(quota_root)
-        quota, quota = quota
-        quota = quota[0].decode("ascii")
-        usage, quota = re.findall(r"STORAGE (\d+) (\d+)", quota)[0]
-        usage = int(usage) * 1024
-        quota = int(quota) * 1024
-        return usage, quota
 
     def folders(self):
         ok, response = self.imap4.list()
