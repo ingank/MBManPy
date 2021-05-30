@@ -204,12 +204,12 @@ class MBMan:
                 re.findall(r"^\((.*)\)$", line[0])[0],
                 re.findall(r"^\"(.*)\"$", line[1])[0]
             )
-            special = 'NoSpecial'
+            special = None
             for su in self.special_use:
                 if (line[0].find(su) != -1):
                     special = su
                     break
-            folders.append([special, line[1]])
+            folders.append((special, line[1]))
         return (typ, folders)
 
     def ls(self):
