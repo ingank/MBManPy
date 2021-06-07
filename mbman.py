@@ -168,7 +168,7 @@ class MBMan:
         (usage, quota) = <instance>.quota()
 
         'usage' ist die Belegung des Speichers in Oktets (Byte)
-        'quota' ist der für diesen Account bereitgestellte Speicher in Oktets
+        'quota' ist der für den aktuellen Account bereitgestellte Speicher in Oktets
         """
         quota_root = ('user/' + self.user)
         quota = self.imap4.getquota(quota_root)
