@@ -247,19 +247,20 @@ class MBMan:
         return uid_list
 
     def message_fetch(self, uid: str):
-        """
-        Eine Nachricht von der aktuellen Mailbox laden.
+        """Eine Nachricht von der aktuellen Mailbox laden.
 
-        Wenn Mailbox nicht `readonly` selektiert wurde,
-        dann wird die Nachricht als gelöscht markiert.
+        message = <instance>.message_fetch(uid)
 
-        Eine Kopie wird unter self.last_message gespeichert.
+        'message' enthält die komplette Nachricht als String
+        'uid' addressiert die gewünschte Nachricht
 
-        Args:
-            uid (str): UID der Nachricht
+        Die Nachricht wird als --zu löschen-- markiert,
+        wenn der Mailbox-Ordner mit select(..., readonly=False) gewählt wurde.
+        Die selbige Nachricht wird endgültig gelöscht,
+        sobald close() oder expunge() angewandt wird.
 
-        Returns:
-            (str): geladene Nachricht
+        Eine Kopie der Nachricht steht in self.last_message
+        weiterhin zur Verfügung.
         """
         dummy, response = self.imap4.uid('fetch', uid, "RFC822")
         message = response[0][1].decode('ascii')
