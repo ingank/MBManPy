@@ -84,7 +84,7 @@ class MBMan:
         return self.imap4.login(user, passwd)
 
     def select(self, mailbox='INBOX', readonly=True, autosave=True):
-        """Eine Mailbox anwählen.
+        """Einen Mailbox-Ordner anwählen.
 
         (typ, [data]) = <instance>.select(mailbox, readonly)
 
@@ -112,7 +112,7 @@ class MBMan:
         return typ, data
 
     def close(self):
-        """Aktuelle Mailbox schließen (kein Logout).
+        """Aktuellen Mailbox-Ordner schließen (kein Logout).
 
         (typ, [data]) = <instance>.close()
 
