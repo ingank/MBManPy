@@ -282,8 +282,7 @@ class MBMan:
         return message
 
     def message_save(self, message: str, path: str):
-        """
-        Speichert eine Nachricht in einer Datei.
+        """Nachricht in einer Datei speichern.
 
         Args:
             message (str): Die komplette Nachricht als String
