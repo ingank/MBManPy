@@ -250,7 +250,7 @@ class MBMan:
     def ls_al(self):
         return self.imap4.uid('fetch', '0:*', "ALL")
 
-    def limit(self, lim=75):
+    def limit_list(self, lim=75):
         """Eine Liste mit UID's erzeugen,
         die nach Löschung der entsprechenden Nachrichten auf dem Server
         den genutzten Speicher genau unterhalb der limitierten Größe des
