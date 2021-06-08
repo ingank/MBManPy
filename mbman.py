@@ -212,16 +212,18 @@ class MBMan:
     def folders(self):
         """Alle Mailbox-Ordner (Namen) abfragen.
 
-        (typ, [(special_use, folder_name)]) = <instance>.folders()
+        (typ, [folders]) = <instance>.folders()
 
-        'typ' ist 'OK', wenn der LIST-Befehl erfolgreich war. In diesem Fall enthält
-        'folders' eine Liste aus Tupeln mit dem Inhalt (special_use, folder_name)
-        'special_use' ist None, wenn der Ordner laut RFC6154 keine `Special-Use Mailbox' ist
-        'special_use' enthält das entsprechende Attribut, wenn der Ordner eine `Special-Use Mailbox' ist
+        Wenn der LIST-Befehl erfolgreich war:
+        'typ' ist 'OK'
+        'folders' ist eine Liste aus Tupeln mit dem Inhalt (special_use, folder_name)
+        'special_use' ist None, wenn der Ordner laut RFC6154 keine 'Special-Use Mailbox' ist
+        'special_use' enthält das entsprechende Attribut, wenn der Ordner eine 'Special-Use Mailbox' ist
         'folder_name' enthält den Namen des Mailbox-Ordners
 
-        'typ' ist ungleich 'OK', wenn der LIST-Befehl nicht erfolgreich war. In diesem Fall enthält
-        'folders' die entsprechende Serverantwort
+        Wenn der LIST-Befehl nicht erfolgreich war:
+        'typ' ist ungleich 'OK'
+        'folders' enthält die Serverantwort
         """
         (typ, response) = self.imap4.list()
         if not (typ == 'OK'):
