@@ -83,24 +83,24 @@ class MBMan:
         self.passwd = passwd
         return self.imap4.login(user, passwd)
 
-    def select(self, mailbox='INBOX', readonly=True, autosave=True):
+    def select(self, mailbox='INBOX', autosave=True):
         """Einen Mailbox-Ordner anwählen.
 
-        (typ, [data]) = <instance>.select(mailbox, readonly)
+        (typ, [data]) = <instance>.select(mailbox, autosave)
 
-        'typ' ist 'OK', wenn SELECT oder EXAMINE erfolgreich waren
-        'data' beinhaltet die Antwort des Servers auf den SELECT- oder EXAMINE-Befehl
-        'mailbox' (str, optional) ist der Name der gewünschten Mailbox. Voreinstellung: 'INBOX'
-        'readonly' (bool, optional): Voreinstellung: True
+        'typ' ist 'OK', wenn SELECT erfolgreich war
+        'data' beinhaltet die Antwort des Servers auf den SELECT-Befehl
+        'mailbox' ist der Name des gewünschten Mailbox-Ordnerds. Voreinstellung: 'INBOX'
+        'autosave' steuert, ob Nachrichten beim Herunterladen automatisch gesichert werden. Voreinstellung: True
         """
-        typ, data = self.imap4.select(mailbox, readonly)
+        (typ, data) = self.imap4.select(mailbox=mailbox, readonly=False)
         self.mb_flags = self.imap4.response('FLAGS')[1]
         self.mb_exists = self.imap4.response('EXISTS')[1]
         self.mb_recent = self.imap4.response('RECENT')[1]
         self.mb_uidvalidity = self.imap4.response('UIDVALIDITY')[1]
         self.mb_uidnext = self.imap4.response('UIDNEXT')[1]
         self.mb_selected = mailbox
-        self.mb_readonly = readonly
+        self.mb_readonly = False
         self.db_autosave = autosave
         if autosave:
             path = self.db_root
@@ -109,7 +109,37 @@ class MBMan:
             if not os.path.exists(path):
                 os.makedirs(path)
             self.db_path = path
-        return typ, data
+        return (typ, data)
+
+    def examine(self, mailbox='INBOX', autosave=True):
+        """Einen Mailbox-Ordner (-nur lesend-) anwählen.
+
+        (typ, [data]) = <instance>.examine(mailbox, autosave)
+
+        'typ' ist 'OK', wenn EXAMINE erfolgreich war
+        'data' beinhaltet die Antwort des Servers auf den EXAMINE-Befehl
+        'mailbox' ist der Name des gewünschten Mailbox-Ordners. Voreinstellung: 'INBOX'
+        'autosave' steuert, ob Nachrichten beim Herunterladen automatisch gesichert werden. Voreinstellung: True
+
+        Trivia: imaplib enthält keine Entsprechung für diesen IMAP-Befehl.
+        """
+        (typ, data) = self.imap4.select(mailbox=mailbox, readonly=True)
+        self.mb_flags = self.imap4.response('FLAGS')[1]
+        self.mb_exists = self.imap4.response('EXISTS')[1]
+        self.mb_recent = self.imap4.response('RECENT')[1]
+        self.mb_uidvalidity = self.imap4.response('UIDVALIDITY')[1]
+        self.mb_uidnext = self.imap4.response('UIDNEXT')[1]
+        self.mb_selected = mailbox
+        self.mb_readonly = True
+        self.db_autosave = autosave
+        if autosave:
+            path = self.db_root
+            path += self.user + '/'
+            path += mailbox + '/'
+            if not os.path.exists(path):
+                os.makedirs(path)
+            self.db_path = path
+        return (typ, data)
 
     def close(self):
         """Aktuellen Mailbox-Ordner schließen (kein Logout).
@@ -369,9 +399,9 @@ if __name__ == "__main__":
         if (args.login):
             print(mb.login(user=args.login[0], passwd=args.login[1]))
         if (args.select):
-            print(mb.select(args.select, readonly=False))
+            print(mb.select(mailbox=args.select))
         if (args.examine):
-            print(mb.select(args.examine, readonly=True))
+            print(mb.examine(mailbox=args.examine))
         if (args.state):
             print(mb.state())
         if (args.capability):
