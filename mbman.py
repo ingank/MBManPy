@@ -308,7 +308,11 @@ class MBMan:
             file_path += '.eml'
             self.message_save(message, file_path)
             self.db_file = file_path
-        return message
+        if self.mb_readonly:
+            return (typ, message)
+        else:
+            self.imap4.uid('store', uid, '+FLAGS', '\\Deleted')
+            return (typ, message)
 
     def message_save(self, message: str, path: str):
         """Nachricht in einer Datei speichern.
