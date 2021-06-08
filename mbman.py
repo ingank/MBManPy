@@ -294,13 +294,10 @@ class MBMan:
         Eine Kopie der Nachricht steht in self.last_message
         weiterhin zur Verfügung.
         """
-        dummy, response = self.imap4.uid('fetch', uid, "RFC822")
+        (typ, response) = self.imap4.uid('fetch', uid, "RFC822")
         message = response[0][1].decode('ascii')
         self.last_message = message
         self.last_uid = uid
-        if not self.mb_readonly:
-            pass
-            self.imap4.uid('store', uid, '+FLAGS', '\\Deleted')
         if self.db_autosave:
             uid_val = self.mb_uidvalidity[0].decode('ascii')
             length = len(uid)
