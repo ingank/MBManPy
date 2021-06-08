@@ -371,7 +371,7 @@ if __name__ == "__main__":
 
     import argparse
 
-    parser = argparse.ArgumentParser(description='A Python program using modul mbman.py')
+    parser = argparse.ArgumentParser(description='A Mailbox Management API in Python.')
     parser.add_argument("--debug", metavar="int", type=int, help="set debug level to int", default=4)
     parser.add_argument("--print-args", action="store_true", help="print parsed command line arguments")
     parser.add_argument("--connect", type=str, metavar="foo", help="connect to server foo")
