@@ -383,6 +383,7 @@ if __name__ == "__main__":
     parser.add_argument("--quota", action="store_true", help="print infos about quota and usage")
     parser.add_argument("--folders", action="store_true", help="print a list of available mailbox folders")
     parser.add_argument("--ls", action="store_true", help="print a list of messages with size")
+    parser.add_argument("--limit", nargs='?', type=int, metavar="foo", help="print a list of message-uid's for mailbox-limiting", const=75)
     # parser.add_argument("--get-info", action="store_true", help="print some infos about the mbman object")
     # parser.add_argument("--get-message", metavar="uid", type=int, help="get message with specific uid from server")
     # parser.add_argument("--autolimit", metavar="percent", type=int, help="limit mailbox to given value", default=80)
@@ -416,6 +417,8 @@ if __name__ == "__main__":
         if (args.ls):
             print(mb.ls())
             # TODO mb.ls sollte die Werte schon parsen
+        if (args.limit):
+            print(mb.limit_list(lim=args.limit))
     except:
         mb.logout()
         raise
