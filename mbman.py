@@ -83,8 +83,8 @@ class MBMan:
         self.passwd = passwd
         return self.imap4.login(user, passwd)
 
-    def select(self, mailbox='INBOX', autosave=True):
-        """Einen Mailbox-Ordner anwählen.
+    def select(self, mailbox='INBOX', autosave=True, readonly=False):
+        """Einen Mailbox-Ordner mittels SELECT anwählen.
 
         (typ, [data]) = <instance>.select(mailbox, autosave)
 
@@ -93,26 +93,22 @@ class MBMan:
         'mailbox' ist der Name des gewünschten Mailbox-Ordnerds. Voreinstellung: 'INBOX'
         'autosave' steuert, ob Nachrichten beim Herunterladen automatisch gesichert werden. Voreinstellung: True
         """
-        (typ, data) = self.imap4.select(mailbox=mailbox, readonly=False)
-        self.mb_flags = self.imap4.response('FLAGS')[1]
-        self.mb_exists = self.imap4.response('EXISTS')[1]
-        self.mb_recent = self.imap4.response('RECENT')[1]
-        self.mb_uidvalidity = self.imap4.response('UIDVALIDITY')[1]
-        self.mb_uidnext = self.imap4.response('UIDNEXT')[1]
-        self.mb_selected = mailbox
-        self.mb_readonly = False
-        self.db_autosave = autosave
-        if autosave:
-            path = self.db_root
-            path += self.user + '/'
-            path += mailbox + '/'
-            if not os.path.exists(path):
-                os.makedirs(path)
-            self.db_path = path
+        (typ, data) = self.imap4.select(mailbox=mailbox, readonly=readonly)
+        if (typ == 'OK'):
+            self.mb_flags = self.imap4.response('FLAGS')[1]
+            self.mb_exists = self.imap4.response('EXISTS')[1]
+            self.mb_recent = self.imap4.response('RECENT')[1]
+            self.mb_uidvalidity = self.imap4.response('UIDVALIDITY')[1]
+            self.mb_uidnext = self.imap4.response('UIDNEXT')[1]
+            self.mb_selected = mailbox
+            self.mb_readonly = readonly
+            self.db_autosave = autosave
+            self.db_path = self.db_root + self.user + '/' + mailbox + '/'
+            os.makedirs(self.db_path, exist_ok=True)
         return (typ, data)
 
     def examine(self, mailbox='INBOX', autosave=True):
-        """Einen Mailbox-Ordner (-nur lesend-) anwählen.
+        """Einen Mailbox-Ordner mittels EXAMINE anwählen.
 
         (typ, [data]) = <instance>.examine(mailbox, autosave)
 
@@ -123,23 +119,7 @@ class MBMan:
 
         Trivia: imaplib enthält keine Entsprechung für diesen IMAP-Befehl.
         """
-        (typ, data) = self.imap4.select(mailbox=mailbox, readonly=True)
-        self.mb_flags = self.imap4.response('FLAGS')[1]
-        self.mb_exists = self.imap4.response('EXISTS')[1]
-        self.mb_recent = self.imap4.response('RECENT')[1]
-        self.mb_uidvalidity = self.imap4.response('UIDVALIDITY')[1]
-        self.mb_uidnext = self.imap4.response('UIDNEXT')[1]
-        self.mb_selected = mailbox
-        self.mb_readonly = True
-        self.db_autosave = autosave
-        if autosave:
-            path = self.db_root
-            path += self.user + '/'
-            path += mailbox + '/'
-            if not os.path.exists(path):
-                os.makedirs(path)
-            self.db_path = path
-        return (typ, data)
+        return self.select(mailbox=mailbox, autosave=autosave, readonly=True)
 
     def close(self):
         """Aktuellen Mailbox-Ordner schließen (kein Logout).
@@ -295,24 +275,26 @@ class MBMan:
         weiterhin zur Verfügung.
         """
         (typ, response) = self.imap4.uid('fetch', uid, "RFC822")
-        message = response[0][1].decode('ascii')
-        self.last_message = message
-        self.last_uid = uid
-        if self.db_autosave:
-            uid_val = self.mb_uidvalidity[0].decode('ascii')
-            length = len(uid)
-            null_count = self.db_uidlength - length
-            file_path = self.db_path
-            file_path += uid_val + '_'
-            file_path += '0' * null_count + uid
-            file_path += '.eml'
-            self.message_save(message, file_path)
-            self.db_file = file_path
-        if self.mb_readonly:
-            return (typ, message)
+        if (typ == 'OK'):
+            self.last_message = response[0][1].decode('ascii')
+            self.last_uid = uid
+            if self.db_autosave:
+                uid_val = self.mb_uidvalidity[0].decode('ascii')
+                length = len(uid)
+                null_count = self.db_uidlength - length
+                file_path = self.db_path
+                file_path += uid_val + '_'
+                file_path += '0' * null_count + uid
+                file_path += '.eml'
+                self.message_save(self.last_message, file_path)
+                self.db_file = file_path
+            if self.mb_readonly:
+                return (typ, self.last_message)
+            else:
+                self.imap4.uid('store', uid, '+FLAGS', '\\Deleted')
+                return (typ, self.last_message)
         else:
-            self.imap4.uid('store', uid, '+FLAGS', '\\Deleted')
-            return (typ, message)
+            return (typ, response)
 
     def message_save(self, message: str, path: str):
         """Nachricht in einer Datei speichern.
