@@ -7,6 +7,7 @@
 #
 
 import imaplib
+from imapclient import IMAPClient
 import email
 import os
 import re
