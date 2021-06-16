@@ -16,18 +16,14 @@ import re
 class MBMan:
 
     special_use = (
-        # RFC 6154
-        # IETF Draft: IMAP LIST extension for special-use mailboxes
+        # have a look at RFC 6154
         'All',
         'Archive',
         'Drafts',
         'Flagged',
         'Junk',
         'Sent',
-        'Trash',
-        'AllMail',  # obsolete
-        'Spam',    # obsolete
-        'Starred'  # obsolete
+        'Trash'
     )
 
     def __init__(self, debug=0):
