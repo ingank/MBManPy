@@ -16,67 +16,89 @@ import re
 class MBMan:
 
     def __init__(self):
-        self.passwd = None
         self.connected = None
         self.authenticated = None
         self.selected = None
+        self.host = None
+        self.user = None
+        self.passwd = None
+        self.welcome = None
 
-    def connect(self, server):
-        """Verbindung zu einem IMAP4 Server herstellen.
+    def connect(self, host=None):
+        """Verbindung zu einem IMAP4-Server herstellen.
 
-        (typ, [data]) = <instance>.connect(server)
+        welcome = <instance>.connect(server)
 
-        'typ' ist 'OK', wenn Verbindung erfolgreich
-        'data' beinhaltet die Willkommensantwort des Servers
-        'server' ist eine Serveradresse
+        'welcome' beinhaltet die Willkommensantwort des Servers
+        'host' ist eine IMAP4-Serveradresse
         """
-        self.connection = IMAPClient(host=server)
+        if self.connected:
+            return None
+        if not host:
+            host = self.host
+        if not host:
+            return None
+        self.connection = IMAPClient(host=host)
+        self.host = host
         self.connected = True
+        return self.connection.welcome
 
-    def login(self, user, passwd):
+    def login(self, user=None, passwd=None):
         """Auf einem IMAP4 Server einloggen.
 
-        (typ, [data]) = <instance>.login(user, passwd)
+        response = <instance>.login(user, passwd)
 
-        'typ' ist 'OK', wenn Login erfolgreich
-        'data' beinhaltet die letzte Antwort des Servers auf den Loginversuch
-        'user' Benutzername zum gewünschten Account
+        'response' beinhaltet die letzte Antwort des Servers auf den Loginversuch
+        'user' Benutzername des Accounts
         'passwd' dazugehöriges Passwort
         """
-        self.connection.login(username=user, password=passwd)
+        if not self.connected:
+            return None
+        if not user:
+            user = self.user
+        if not user:
+            return None
+        if not passwd:
+            passwd = self.passwd
+        if not passwd:
+            return None
+        response = self.connection.login(username=user, password=passwd)
+        self.user = user
+        self.passwd = passwd
         self.authenticated = True
+        return response
 
     def close(self):
         """Aktuellen Mailbox-Ordner schließen (kein Logout).
 
-        (typ, [data]) = <instance>.close()
+        response = <instance>.close()
 
-        'typ' ist 'OK', wenn CLOSE erfolgreich
-        'data' beinhaltet die Antwort des Servers auf den CLOSE-Befehl
-        'typ' und 'data' werden auf None gesetzt, wenn keine Mailbox angewählt war        
+        'response' beinhaltet die Antwort des Servers auf den CLOSE-Befehl
+        'response' beinhaltet None, wenn keine Mailbox angewählt war
         """
-        if self.selected:
-            self.connection.close_folder()
-            self.selected = False
+        if not self.selected:
+            return None
+        response = self.connection.close_folder()
+        self.selected = False
+        return response
 
     def logout(self):
         """Verbindung zum Server komplett abbauen.
         Dabei ist unerheblich, ob eine Mailbox angewählt ist.
         Die Verbindung wird in jedem Fall kontrolliert abgebaut.
 
-        (typ, [data]) = <instance>.logout()
+        response = <instance>.logout()
 
-        'typ' ist 'OK', wenn LOGOUT erfolgreich
-        'data' beinhaltet die Antwort des Servers auf den LOGOUT-Befehl
-        'typ' und 'data' werden auf None gesetzt, wenn keine Client-Server-Verbindung bestand        
+        'response' beinhaltet die Antwort des Servers auf den LOGOUT-Befehl
+        'response' beinhaltet None, wenn keine Client-Server-Verbindung bestand
         """
-        if self.connection:
-            if self.connected:
-                if self.selected:
-                    self.close()
-                self.connection.logout()
-                self.authenticated = False
-                self.connected = False
+        if not self.connected:
+            return None
+        if self.selected:
+            self.close()
+        self.connection.logout()
+        self.authenticated = False
+        self.connected = False
 
 
 if __name__ == "__main__":
@@ -101,9 +123,9 @@ if __name__ == "__main__":
         if (args.print_args):
             print(args)
         if (args.connect):
-            mb.connect(server=args.connect)
+            print(mb.connect(host=args.connect))
         if (args.login):
-            mb.login(user=args.login[0], passwd=args.login[1])
+            print(mb.login(user=args.login[0], passwd=args.login[1]))
     except:
         mb.logout()
         raise
