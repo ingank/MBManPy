@@ -23,6 +23,7 @@ class MBMan:
         self.user = None
         self.passwd = None
         self.welcome = None
+        self.readonly = None
 
     def connect(self, host=None):
         """Verbindung zu einem IMAP4-Server herstellen.
@@ -80,6 +81,7 @@ class MBMan:
             return None
         response = self.connection.close_folder()
         self.selected = False
+        self.readonly = None
         return response
 
     def logout(self):
