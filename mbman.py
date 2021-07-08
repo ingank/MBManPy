@@ -69,6 +69,36 @@ class MBMan:
         self.authenticated = True
         return response
 
+    def select(self, folder='INBOX'):
+        """Einen Mailbox-Ordner (lesend und schreibend) anwählen.
+
+        response = <instance>.select(folder='INBOX')
+
+        'response' beinhaltet die letzte Antwort des Servers auf den IMAP-Befehl 'SELECT'
+        'folder' Name des anzuwählenden Ordners. Bei Nichtangabe, wird standardmäßig 'INBOX' angewählt
+        """
+        if not self.authenticated:
+            return None
+        response = self.connection.select_folder(folder)
+        self.selected = True
+        self.readonly = False
+        return response
+
+    def examine(self, folder='INBOX'):
+        """Einen Mailbox-Ordner (nur lesend) anwählen.
+
+        response = <instance>.examine(folder='INBOX')
+
+        'response' beinhaltet die letzte Antwort des Servers auf den IMAP-Befehl 'EXAMINE'
+        'folder' Name des anzuwählenden Ordners. Bei Nichtangabe, wird standardmäßig 'INBOX' angewählt
+        """
+        if not self.authenticated:
+            return None
+        response = self.connection.select_folder(folder, readonly=True)
+        self.selected = True
+        self.readonly = True
+        return response
+
     def close(self):
         """Aktuellen Mailbox-Ordner schließen (kein Logout).
 
