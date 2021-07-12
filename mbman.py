@@ -132,6 +132,22 @@ class MBMan:
         self.authenticated = False
         self.connected = False
 
+    def list_folders(self):
+        # list
+        return
+
+    def list_messages(self):
+        # search
+        return
+
+    def fetch_message(self, uid):
+        # fetch hole message as string
+        return
+
+    def save_message(self, uid):
+        # fetch message and save it to backup-file
+        return
+
 
 if __name__ == "__main__":
 
