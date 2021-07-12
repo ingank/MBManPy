@@ -148,6 +148,8 @@ if __name__ == "__main__":
     parser.add_argument("--print-args", action="store_true", help="print parsed command line arguments")
     parser.add_argument("--connect", type=str, metavar="foo", help="connect to server foo")
     parser.add_argument("--login", nargs=2, type=str, metavar=("foo", "bar"), help="login to account foo with password bar")
+    parser.add_argument("--select", nargs='?', type=str, metavar="foo", help="select specific mailbox", const="INBOX")
+    parser.add_argument("--examine", nargs='?', type=str, metavar="foo", help="select specific mailbox readonly", const="INBOX")
     args = parser.parse_args()
 
     try:
@@ -158,8 +160,12 @@ if __name__ == "__main__":
             print(mb.connect(host=args.connect))
         if (args.login):
             print(mb.login(user=args.login[0], passwd=args.login[1]))
+        if (args.select):
+            print(mb.select(folder=args.select))
+        if (args.examine):
+            print(mb.examine(folder=args.examine))
+        if (mb.connected):
+            mb.logout()
+
     except:
-        mb.logout()
-        raise
-    else:
         mb.logout()
