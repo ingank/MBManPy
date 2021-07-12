@@ -147,8 +147,18 @@ class MBMan:
         return ret
 
     def list_messages(self):
-        # search
-        return
+        """Liefert eine Liste der UID's aller Nachrichten des aktuellen Mailbox-Ordners.
+
+        response = <instance>.list_messages()
+        """
+        if not self.connected:
+            return None
+        if not self.authenticated:
+            return None
+        if not self.selected:
+            return None
+        response = self.connection.search()
+        return response
 
     def fetch_message(self, uid):
         # fetch hole message as string
@@ -177,6 +187,7 @@ if __name__ == "__main__":
     parser.add_argument("--select", nargs='?', type=str, metavar="foo", help="select specific mailbox", const="INBOX")
     parser.add_argument("--examine", nargs='?', type=str, metavar="foo", help="select specific mailbox readonly", const="INBOX")
     parser.add_argument("--list-folders", action="store_true", help="get a list of mailbox folders available for the logged in user")
+    parser.add_argument("--list-messages", action="store_true", help="get a list of message uid's available in selected mailbox folder")
     args = parser.parse_args()
 
     try:
@@ -193,6 +204,8 @@ if __name__ == "__main__":
             print(mb.examine(folder=args.examine))
         if (args.list_folders):
             print(mb.list_folders())
+        if (args.list_messages):
+            print(mb.list_messages())
         if (mb.connected):
             mb.logout()
 
