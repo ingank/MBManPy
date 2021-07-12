@@ -133,8 +133,18 @@ class MBMan:
         self.connected = False
 
     def list_folders(self):
-        # list
-        return
+        """Liefert eine Liste aller Mailbox-Ordner des aktuellen Benutzers.
+
+        response = <instance>.list_folders()
+        """
+        if not self.connected:
+            return None
+        if not self.authenticated:
+            return None
+        ret = []
+        for (dummy, dummy, z) in self.connection.list_folders():
+            ret.append(z)
+        return ret
 
     def list_messages(self):
         # search
@@ -166,6 +176,7 @@ if __name__ == "__main__":
     parser.add_argument("--login", nargs=2, type=str, metavar=("foo", "bar"), help="login to account foo with password bar")
     parser.add_argument("--select", nargs='?', type=str, metavar="foo", help="select specific mailbox", const="INBOX")
     parser.add_argument("--examine", nargs='?', type=str, metavar="foo", help="select specific mailbox readonly", const="INBOX")
+    parser.add_argument("--list-folders", action="store_true", help="get a list of mailbox folders available for the logged in user")
     args = parser.parse_args()
 
     try:
@@ -180,6 +191,8 @@ if __name__ == "__main__":
             print(mb.select(folder=args.select))
         if (args.examine):
             print(mb.examine(folder=args.examine))
+        if (args.list_folders):
+            print(mb.list_folders())
         if (mb.connected):
             mb.logout()
 
