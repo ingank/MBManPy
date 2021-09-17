@@ -25,21 +25,21 @@ class MBMan:
         'Trash'
     )
 
-    def __init__(self, debug=0):
+    def __init__(self, debug, db_root, db_autosave=True, db_uidlength=8):
         imaplib.Debug = debug
-        self.imap4 = None
         self.debug = debug
         self.server = None
         self.user = None
         self.passwd = None
+        self.imap4 = None
         self.last_message = None
         self.last_message_path = None
         self.last_uid = None
-        self.db_root = os.environ['HOME'] + '/MBData/'
-        self.db_uidlength = 8
+        self.db_root = db_root
+        self.db_uidlength = db_uidlength
+        self.db_autosave = db_autosave
         self.db_path = None
         self.db_file = None
-        self.db_autosave = None
         self.mb_selected = None
         self.mb_readonly = None
         self.mb_uidvalidity = None
