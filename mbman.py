@@ -7,10 +7,9 @@
 #
 
 import imaplib
-import email
 import os
 import re
-#import dumper
+# import email
 
 
 class MBMan:
@@ -349,6 +348,7 @@ class MBMan:
 if __name__ == "__main__":
 
     import argparse
+    import dumper
 
     parser = argparse.ArgumentParser(description='A Mailbox Management API in Python.')
     parser.add_argument("--debug", metavar="int", type=int, help="set debug level to int", default=4)
