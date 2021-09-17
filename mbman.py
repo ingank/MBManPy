@@ -111,7 +111,7 @@ class MBMan:
             return None
         response = self.connection.close_folder()
         self.selected = False
-        self.readonly = None
+        self.readonly = False
         return response
 
     def logout(self):
