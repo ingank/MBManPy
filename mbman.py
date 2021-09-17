@@ -219,10 +219,10 @@ class MBMan:
             folders.append((special, line[1]))
         return (typ, folders)
 
-    def ls(self):
+    def messages(self):
         return self.imap4.uid('fetch', '0:*', "RFC822.SIZE")
 
-    def ls_al(self):
+    def messages_all(self):
         return self.imap4.uid('fetch', '0:*', "ALL")
 
     def limit_list(self, lim=75):
@@ -359,9 +359,7 @@ if __name__ == "__main__":
     parser.add_argument("--examine", nargs='?', type=str, metavar="foo", help="select specific mailbox readonly", const="INBOX")
     parser.add_argument("--state", action="store_true", help="print infos about the actual state of connection")
     parser.add_argument("--capability", action="store_true", help="print infos about capability in actual state")
-    parser.add_argument("--quota", action="store_true", help="print infos about quota and usage")
-    parser.add_argument("--folders", action="store_true", help="print a list of available mailbox folders")
-    parser.add_argument("--ls", action="store_true", help="print a list of messages with size")
+    parser.add_argument("--messages", action="store_true", help="print list of messages with size")
     parser.add_argument("--limit", nargs='?', type=int, metavar="foo", help="print a list of message-uid's for mailbox-limiting", const=75)
     # parser.add_argument("--get-info", action="store_true", help="print some infos about the mbman object")
     # parser.add_argument("--get-message", metavar="uid", type=int, help="get message with specific uid from server")
@@ -393,8 +391,8 @@ if __name__ == "__main__":
             print("Usage:", usage, ", Quota:", quota, "(", usage/quota*100, "% )")
         if (args.folders):
             print(mb.folders())
-        if (args.ls):
-            print(mb.ls())
+        if (args.messages):
+            print(mb.messages())
             # TODO mb.ls sollte die Werte schon parsen
         if (args.limit):
             print(mb.limit_list(lim=args.limit))
