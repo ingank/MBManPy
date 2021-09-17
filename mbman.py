@@ -126,11 +126,11 @@ class MBMan:
         """
         if not self.connected:
             return None
-        if self.selected:
-            self.close()
-        self.connection.logout()
+        self.close()
+        response = self.connection.logout()
         self.authenticated = False
         self.connected = False
+        return response
 
     def list_folders(self):
         """Liefert eine Liste aller Mailbox-Ordner des aktuellen Benutzers.
