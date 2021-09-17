@@ -351,15 +351,21 @@ if __name__ == "__main__":
     import dumper
 
     db_root = os.environ['HOME'] + '/MBData/'
+
     parser = argparse.ArgumentParser(description='A Mailbox Management API in Python.')
-    parser.add_argument("--debug", metavar="int", type=int, help="set debug level to int", default=4)
-    parser.add_argument("--print-args", action="store_true", help="print parsed command line arguments")
+    parser.add_argument("--args", action="store_true", help="print parsed command line arguments")
+    parser.add_argument("--debug", type=int, metavar="foo", help="set debug level to foo", default=0)
+    parser.add_argument("--dbroot", type=str, metavar="foo", help="set database root directory to foo", default=db_root)
+    parser.add_argument("--autosave", action="store_true", help="save messages to database as they fetched from imap-server", default=True)
+    parser.add_argument("--uidlength", type=int, metavar="foo", help="set length of uid in filename to size foo", default=8)
     parser.add_argument("--connect", type=str, metavar="foo", help="connect to server foo")
     parser.add_argument("--login", nargs=2, type=str, metavar=("foo", "bar"), help="login to account foo with password bar")
-    parser.add_argument("--select", nargs='?', type=str, metavar="foo", help="select specific mailbox", const="INBOX")
-    parser.add_argument("--examine", nargs='?', type=str, metavar="foo", help="select specific mailbox readonly", const="INBOX")
+    parser.add_argument("--select", nargs='?', type=str, metavar="foo", help="select mailbox foo", const="INBOX")
+    parser.add_argument("--examine", nargs='?', type=str, metavar="foo", help="select mailbox foo readonly", const="INBOX")
     parser.add_argument("--state", action="store_true", help="print infos about the actual state of connection")
     parser.add_argument("--capability", action="store_true", help="print infos about capability in actual state")
+    parser.add_argument("--quota", action="store_true", help="print infos about quota and usage of actual connected mailbox")
+    parser.add_argument("--folders", action="store_true", help="print list of available mailbox folders")
     parser.add_argument("--messages", action="store_true", help="print list of messages with size")
     parser.add_argument("--limit", nargs='?', type=int, metavar="foo", help="print a list of message-uid's for mailbox-limiting", const=75)
     # parser.add_argument("--get-info", action="store_true", help="print some infos about the mbman object")
