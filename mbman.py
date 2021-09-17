@@ -375,11 +375,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     try:
-        mb = MBMan(args.debug)
-        if (args.print_args):
-            print(args)
-            raise(BaseException)
-        if (args.debug >= 4):
+        mb = MBMan(debug=args.debug, db_root=args.dbroot, db_autosave=args.autosave, db_uidlength=args.uidlength)
+        if (args.args):
             print(args)
         if (args.connect):
             print(mb.connect(server=args.connect))
@@ -403,6 +400,7 @@ if __name__ == "__main__":
             # TODO mb.ls sollte die Werte schon parsen
         if (args.limit):
             print(mb.limit_list(lim=args.limit))
+        dumper.dump(mb.imap4)
     except:
         mb.logout()
         raise
